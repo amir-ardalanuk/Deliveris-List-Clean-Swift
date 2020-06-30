@@ -9,6 +9,7 @@ target 'UI in Code' do
   pod 'Swinject'
   pod 'SwinjectStoryboard'
   pod 'Kingfisher', '~> 5.0'
+  pod 'XMLParsing', :git => 'https://github.com/ShawnMoore/XMLParsing.git'
 
   # Pods for UI in Code
   target 'NetworkPlatform' do

@@ -12,18 +12,26 @@ import Swinject
 
 public class Requester: NetworkRequest  {
     
+    var mapper : Mapper!
+    
     public init(network:BaseNetwork) {
         super.init(call: network)
+        mapper = JsonMapper()
+    }
+    
+    func setMapper(mapper:Mapper){
+        self.mapper = mapper
     }
     
     public override func makeRequest<ResponseType:Decodable>(provider: NetworkProvider, ofType: ResponseType.Type, compelet: @escaping (ResponseType?) -> Void, error: @escaping (Error) -> Void)  {
         DispatchQueue.global().async {
             self.request(provider: provider) { (callback) in
-                let cllss = ResponseType.self
-                // *** to decode json data for debugginh
-                //let json = try? JSONSerialization.jsonObject(with: callback?.data as? Data ?? Data(), options: []) as? [String : Any]
-                // *** END
-                let data = try? JSONDecoder().decode(cllss, from: callback?.data as? Data ?? Data())
+//                let cllss = ResponseType.self
+//                // *** to decode json data for debugginh
+//                //let json = try? JSONSerialization.jsonObject(with: callback?.data as? Data ?? Data(), options: []) as? [String : Any]
+//                // *** END
+//                let data = try? JSONDecoder().decode(cllss, from: callback?.data as? Data ?? Data())
+                let data : ResponseType? = self.mapper.map(data:  callback?.data as? Data ?? Data())
                 
                 if let existError = callback?.error {
                     error(existError)
@@ -107,6 +115,18 @@ public class RequesterAssembly:Assembly  {
 }
 
 
-
+public class XMLRequesterAssembly:Assembly  {
+    public static let name = "XMLRequesterAssembly"
+    public init() { }
+    
+    public func assemble(container: Container) {
+        container.register(Requester.self,name: XMLRequesterAssembly.name) { (r) in
+            let baseNetwork = r.resolve(BaseNetwork.self)
+            let requester = Requester(network: baseNetwork!)
+            requester.setMapper(mapper: XMLMapper())
+            return requester
+        }.inObjectScope(.weak)
+    }
+}
 
 

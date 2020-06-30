@@ -22,3 +22,17 @@ enum deliveryRoutes :String, RouteFactoryMethod {
     }
     
 }
+
+enum TCETMCRout:String,RouteFactoryMethod {
+    internal var baseUrl: String {
+        get{
+            return "http://www.tsetmc.com/tsev2/"
+        }
+    }
+    
+    case codal = "feed/CodalFeed.aspx?type=RSS"
+    
+    var route: RouteURL {
+        return Route(endpoint: baseUrl + self.rawValue)
+    }
+}

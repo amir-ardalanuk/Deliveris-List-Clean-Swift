@@ -16,6 +16,7 @@ import StoragePlatform
 import LocalPlatform
 
 class MainAssembler {
+    
     var resolver : Resolver {
         return assembler.resolver
     }
@@ -23,15 +24,24 @@ class MainAssembler {
     let assembler = Assembler(container: SwinjectStoryboard.defaultContainer)
     
     init() {
+        //Netowrk
         assembler.apply(assembly: URLSessionNetwork())
         assembler.apply(assembly: RequesterAssembly())
-        assembler.apply(assembly: RemoteFactoryAssembly())
+        //Storage
         assembler.apply(assembly: UserDefaultStorageAssembly())
+        //Local
         assembler.apply(assembly: LocalDeliveryUsecase())
         assembler.apply(assembly: LocalFavoriteUsecase())
-        assembler.apply(assembly: RepositoryDeliveryUsecase())
-        assembler.apply(assembly: MainNavigationAssembly())
+        // Remote
+        assembler.apply(assembly: RemoteFactoryAssembly())
+        assembler.apply(assembly: XMLRequesterAssembly())
         
+        //Repository
+        assembler.apply(assembly: RepositoryDeliveryUsecase())
+        assembler.apply(assembly: RepositoryNewsXMLUsecase())
+        
+        //UI
         assembler.apply(assembly: HomeRouterAssembly())
+        assembler.apply(assembly: MainNavigationAssembly())
     }
 }
