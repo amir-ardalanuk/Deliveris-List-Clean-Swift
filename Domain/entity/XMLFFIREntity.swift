@@ -8,7 +8,7 @@
 
 import Foundation
 public struct XMLFFIREntity: Codable {
-    public var channel: XMLNewsChannelEntity?
+    public var channel: XMLNewsChannelEntity<FFIRItemEntity>?
 }
 
 public struct FFIRItemEntity: Codable {
@@ -16,7 +16,7 @@ public struct FFIRItemEntity: Codable {
     public var description: String?
     public var link: String?
     public var pubDate: String?
-    public var enclosure: String?
+    public var enclosure:EnclosureEntity?
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -26,4 +26,8 @@ public struct FFIRItemEntity: Codable {
         case enclosure
         
     }
+}
+
+public struct EnclosureEntity: Codable {
+    public var url: String?
 }

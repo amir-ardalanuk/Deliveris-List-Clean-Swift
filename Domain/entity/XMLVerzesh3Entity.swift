@@ -9,7 +9,7 @@
 import Foundation
 
 public struct XMLVerzesh3Entity: Codable {
-    public var channel: XMLNewsChannelEntity?
+    public var channel: XMLNewsChannelEntity<RSSItem>?
 }
 
 public struct RSSItem: Codable {

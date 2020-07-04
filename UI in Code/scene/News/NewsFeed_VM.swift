@@ -37,7 +37,7 @@ class NewsFeedVM: ViewModel {
             print("change")
             return  Observable.zip(deliveryList, self.favoriteServices.retriveFavoritesIds()) { (news, _)  in
                 return news.channel?.items.map {
-                    NewsModel(title: $0.title, date: $0.pubDate, link: $0.link, desc: $0.description, imagePath: nil
+                    NewsModel(title: $0.title, date: $0.pubDate, link: $0.link, desc: $0.description, imagePath: $0.enclosure?.url
                     ) } ?? []
             }.do(onNext: { (list) in
                 self.news.onNext(list)
