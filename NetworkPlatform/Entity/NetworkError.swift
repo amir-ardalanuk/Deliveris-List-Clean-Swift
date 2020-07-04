@@ -1,4 +1,3 @@
-
 //
 //  NetworkError.swift
 //  AANetworkProvider
@@ -8,7 +7,7 @@
 //
 
 import Foundation
-public enum NetworkError : Error {
+public enum NetworkError: Error {
     case errorMethodParameter
     case errorHTTPMethod
     case customError(Any?)

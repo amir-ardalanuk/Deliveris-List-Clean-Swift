@@ -17,7 +17,7 @@ import LocalPlatform
 
 class MainAssembler {
     
-    var resolver : Resolver {
+    var resolver: Resolver {
         return assembler.resolver
     }
     
@@ -27,6 +27,7 @@ class MainAssembler {
         //Netowrk
         assembler.apply(assembly: URLSessionNetwork())
         assembler.apply(assembly: RequesterAssembly())
+        assembler.apply(assembly: XMLRequesterAssembly())
         //Storage
         assembler.apply(assembly: UserDefaultStorageAssembly())
         //Local
@@ -34,7 +35,7 @@ class MainAssembler {
         assembler.apply(assembly: LocalFavoriteUsecase())
         // Remote
         assembler.apply(assembly: RemoteFactoryAssembly())
-        assembler.apply(assembly: XMLRequesterAssembly())
+        assembler.apply(assembly: RemoteNewsXMLUsecase())
         
         //Repository
         assembler.apply(assembly: RepositoryDeliveryUsecase())

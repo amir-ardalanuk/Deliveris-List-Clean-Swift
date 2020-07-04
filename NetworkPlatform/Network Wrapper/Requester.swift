@@ -10,20 +10,20 @@ import Foundation
 import RxSwift
 import Swinject
 
-public class Requester: NetworkRequest  {
+public class Requester: NetworkRequest {
     
-    var mapper : Mapper!
+    var mapper: Mapper!
     
-    public init(network:BaseNetwork) {
+    public init(network: BaseNetwork) {
         super.init(call: network)
         mapper = JsonMapper()
     }
     
-    func setMapper(mapper:Mapper){
+    func setMapper(mapper: Mapper) {
         self.mapper = mapper
     }
     
-    public override func makeRequest<ResponseType:Decodable>(provider: NetworkProvider, ofType: ResponseType.Type, compelet: @escaping (ResponseType?) -> Void, error: @escaping (Error) -> Void)  {
+    public override func makeRequest<ResponseType: Decodable>(provider: NetworkProvider, ofType: ResponseType.Type, compelet: @escaping (ResponseType?) -> Void, error: @escaping (Error) -> Void) {
         DispatchQueue.global().async {
             self.request(provider: provider) { (callback) in
 //                let cllss = ResponseType.self
@@ -31,7 +31,7 @@ public class Requester: NetworkRequest  {
 //                //let json = try? JSONSerialization.jsonObject(with: callback?.data as? Data ?? Data(), options: []) as? [String : Any]
 //                // *** END
 //                let data = try? JSONDecoder().decode(cllss, from: callback?.data as? Data ?? Data())
-                let data : ResponseType? = self.mapper.map(data:  callback?.data as? Data ?? Data())
+                let data: ResponseType? = self.mapper.map(data: callback?.data as? Data ?? Data() )
                 
                 if let existError = callback?.error {
                     error(existError)
@@ -45,7 +45,7 @@ public class Requester: NetworkRequest  {
                 
                 if let checkError = self.errorHandeling(status, data: data, ofType: ofType) {
                     switch checkError {
-                    case let err as NetworkStatusError where err == .Token_expired:
+                    case let err as NetworkStatusError where err == .tokenExpired:
                         //TODO: add Authentication refresh token handler
                         break
                     default:
@@ -61,12 +61,11 @@ public class Requester: NetworkRequest  {
         
     }
     
-    public override func makeRXRequest<ResponseType:Decodable>(provider: NetworkProvider, ofType: ResponseType.Type) -> PrimitiveSequence<SingleTrait, ResponseType>
-    {
+    public override func makeRXRequest<ResponseType: Decodable>(provider: NetworkProvider, ofType: ResponseType.Type) -> PrimitiveSequence<SingleTrait, ResponseType> {
         
         return Single.create { [weak self](observer) -> Disposable in
             
-            self?.makeRequest(provider: provider, ofType:ofType, compelet: { (data:ResponseType?) in
+            self?.makeRequest(provider: provider, ofType: ofType, compelet: { (data: ResponseType?) in
                 guard let safeData = data else {
                     observer(.error(NetworkError.notFound("response is null")))
                     return
@@ -82,8 +81,7 @@ public class Requester: NetworkRequest  {
         
     }
     
-    
-    public override func errorHandeling<ResponseType>(_ status: Int, data: ResponseType?,ofType:ResponseType.Type) -> Error? {
+    public override func errorHandeling<ResponseType>(_ status: Int, data: ResponseType?, ofType: ResponseType.Type) -> Error? {
         if let networkStatusError = NetworkStatusError(rawValue: status) {
             return networkStatusError
         }
@@ -103,30 +101,27 @@ public class Requester: NetworkRequest  {
     
 }
 
-public class RequesterAssembly:Assembly  {
+public class RequesterAssembly: Assembly {
     public init() { }
     
     public func assemble(container: Container) {
-        container.register(Requester.self) { (r) in
-            let baseNetwork = r.resolve(BaseNetwork.self)
+        container.register(Requester.self) { (resolver) in
+            let baseNetwork = resolver.resolve(BaseNetwork.self)
             return Requester(network: baseNetwork!)
         }.inObjectScope(.weak)
     }
 }
 
-
-public class XMLRequesterAssembly:Assembly  {
+public class XMLRequesterAssembly: Assembly {
     public static let name = "XMLRequesterAssembly"
     public init() { }
     
     public func assemble(container: Container) {
-        container.register(Requester.self,name: XMLRequesterAssembly.name) { (r) in
-            let baseNetwork = r.resolve(BaseNetwork.self)
+        container.register(Requester.self, name: XMLRequesterAssembly.name) { (resolver) in
+            let baseNetwork = resolver.resolve(BaseNetwork.self)
             let requester = Requester(network: baseNetwork!)
             requester.setMapper(mapper: XMLMapper())
             return requester
         }.inObjectScope(.weak)
     }
 }
-
-

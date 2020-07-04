@@ -9,12 +9,12 @@
 import Foundation
 import Swinject
 
-open  class URLSessionNetwork : BaseNetwork {
+open  class URLSessionNetwork: BaseNetwork {
    
-    var task : URLSessionTask?
+    var task: URLSessionTask?
     //let reachability : Reachability
 
-    public init(){
+    public init() {
       //  reachability = try!  Reachability()
     }
     
@@ -26,12 +26,12 @@ open  class URLSessionNetwork : BaseNetwork {
         self.task?.cancel()
     }
     
-    public func load(url:String, method:BaseNetworkMethod, payload :Any?,decoder:BaseNetworkDecoder,complete:@escaping (BaseNetworkCallBack)->Void){
+    public func load(url: String, method: BaseNetworkMethod, payload: Any?, decoder: BaseNetworkDecoder, complete: @escaping (BaseNetworkCallBack) -> Void) {
         
         var component = URLComponents(string: url)
-        var header = [String:String]()
+        var header = [ String: String ]()
         
-        var param : Data?
+        var param: Data?
         
         switch decoder {
         case .json:
@@ -39,7 +39,7 @@ open  class URLSessionNetwork : BaseNetwork {
             header["Content-Type"] = "application/json"
             
         default:
-            component?.queryItems = (payload as? [String:Any])?.queryItem
+            component?.queryItems = (payload as? [ String: Any ])?.queryItem
         }
         
         guard let url = component?.url else {return}
@@ -50,26 +50,24 @@ open  class URLSessionNetwork : BaseNetwork {
         request.allHTTPHeaderFields = header
         request.httpMethod = method.rawValue
       
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            data, response, error in
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
             let statusCode = (response as? HTTPURLResponse)?.statusCode
             let result = BaseNetworkResult(status: statusCode, error: error, data: data)
-            if(error != nil){
+            if error != nil {
                 complete(.failure(result))
-            } else{
+            } else {
                 complete(.success(result))
             }
         }
-        task.resume();
+        task.resume()
     }
-    
-    
-    func jsonDecoder(json:Any?) throws ->Data?  {
+   
+    func jsonDecoder(json: Any?) throws -> Data? {
         guard let stJson = json else {
             return nil
         }
        do {
-        return try JSONSerialization.data(withJSONObject: stJson, options:[]) as Data
+        return try JSONSerialization.data(withJSONObject: stJson, options: []) as Data
         } catch {
         throw NetworkError.couldNotMapToClass
         }
@@ -82,10 +80,8 @@ open  class URLSessionNetwork : BaseNetwork {
 //        case .unavailable,.none:
 //            return  false
 //        }
-        return true;
+        return true
     }
-       
- 
 }
 extension Dictionary {
     var queryString: String {
@@ -94,21 +90,19 @@ extension Dictionary {
         output = String(output.dropLast())
         return output
     }
-    var queryItem:[URLQueryItem] {
+    var queryItem: [ URLQueryItem ] {
         var queryItems = [URLQueryItem]()
         for (key, value) in self {
-            queryItems.append(URLQueryItem(name: key as! String, value: value as? String ?? ""))
+            queryItems.append(URLQueryItem(name: key as? String ?? "", value: value as? String ?? ""))
         }
         return queryItems
     }
 }
-extension URLSessionNetwork : Assembly {
+extension URLSessionNetwork: Assembly {
     public func assemble(container: Container) {
-        container.register(BaseNetwork.self) { r in
+        container.register(BaseNetwork.self) { _ in
         let baseNetwork = URLSessionNetwork()
         return baseNetwork
         }.inObjectScope(.weak)
     }
-    
-    
 }

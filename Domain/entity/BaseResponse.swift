@@ -7,13 +7,11 @@
 //
 
 import Foundation
-protocol BaseResponse :Codable {
-    var status :Bool?{get set}
+protocol BaseResponse: Codable {
+    var status: Bool? {get set}
 }
 
-public class Response<T:Codable> : Codable {
+public class Response<T: Codable>: Codable {
 
-    public let data : T?
-
-
+    public let data: T?
 }

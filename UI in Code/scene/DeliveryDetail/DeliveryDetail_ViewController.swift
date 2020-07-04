@@ -14,18 +14,17 @@ class DeliveryDetailViewController: UIViewController {
     
     let bag = DisposeBag()
     
-    var vMainStack : UIStackView = {
+    var vMainStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.vertical
         sv.alignment = UIStackView.Alignment.fill
         sv.distribution = UIStackView.Distribution.fill
         sv.spacing = 16
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
-    
-    var labelTitleFrom : UILabel = {
+    var labelTitleFrom: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 17)
@@ -35,7 +34,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    var labelTitleTo : UILabel = {
+    var labelTitleTo: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 17)
@@ -45,8 +44,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    
-    var labelFrom : UILabel = {
+    var labelFrom: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 17)
@@ -56,7 +54,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    var labelTo : UILabel = {
+    var labelTo: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 17)
@@ -66,7 +64,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    var favoriteButton : UIButton = {
+    var favoriteButton: UIButton = {
         let btn = UIButton(type: UIButton.ButtonType.system)
         btn.setTitle("Add to Favorite", for: UIControl.State.normal)
         btn.setImage(#imageLiteral(resourceName: "icons8-love-96"), for: UIControl.State.normal)
@@ -77,7 +75,7 @@ class DeliveryDetailViewController: UIViewController {
         return btn
     }()
     
-    var labelStatusTitle : UILabel = {
+    var labelStatusTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 20)
@@ -87,7 +85,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    var labelPriceTitle : UILabel = {
+    var labelPriceTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 20)
@@ -97,7 +95,7 @@ class DeliveryDetailViewController: UIViewController {
         return label
     }()
     
-    var labelPrice : UILabel = {
+    var labelPrice: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 20)
@@ -113,9 +111,9 @@ class DeliveryDetailViewController: UIViewController {
         return imgv
     }()
     
-    let viewModel : DeliveryDetailViewModel
+    let viewModel: DeliveryDetailViewModel
     
-    init(viewModel : DeliveryDetailViewModel) {
+    init(viewModel: DeliveryDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -146,29 +144,31 @@ extension DeliveryDetailViewController {
 
 //data binding
 extension DeliveryDetailViewController {
-    func databinding(){
-        let output = viewModel.transform(input: DeliveryDetailViewModel.Input(changeFavoriteStatus: favoriteButton.rx.controlEvent(.touchUpInside).asDriver()))
+    func databinding() {
+        let output = viewModel.transform(input: DeliveryDetailViewModel.Input(changeFavoriteStatus:
+            favoriteButton.rx.controlEvent(.touchUpInside)
+            .asDriver()))
         output.from.drive(labelFrom.rx.text).disposed(by: bag)
         output.to.drive(labelTo.rx.text).disposed(by: bag)
         output.title.drive(labelStatusTitle.rx.text).disposed(by: bag)
         output.price.drive(labelPrice.rx.text).disposed(by: bag)
         output.picture.drive(deliveryImage.rx.imageURL).disposed(by: bag)
-        output.favTitle.bind(to:favoriteButton.rx.title()).disposed(by: bag)
-        output.favTint.bind(to: favoriteButton.rx.tintColor).disposed(by:bag)
+        output.favTitle.bind(to: favoriteButton.rx.title()).disposed(by: bag)
+        output.favTint.bind(to: favoriteButton.rx.tintColor).disposed(by: bag)
     }
 }
 
 //Constraint
 extension DeliveryDetailViewController {
     
-    func makeContainer()->UIView {
+    func makeContainer() -> UIView {
         let view = UIView()
         view.radius(8)
         view.backgroundColor = .white
         return view
     }
     
-    func addViews(){
+    func addViews() {
         self.view.addSubview(vMainStack)
         vMainStack.activateFillSafeAreaConstraint(with: self.view, margin: 12)
         
@@ -180,18 +180,18 @@ extension DeliveryDetailViewController {
         self.vMainStack.addArrangedSubview(favoriteButton)
     }
     
-    func makeDeliveryInfoContainer()->UIView {
+    func makeDeliveryInfoContainer() -> UIView {
         let deliverContainerView = makeContainer()
         let vStack = ViewMaker.makeStackView(space: 12)
         
         deliverContainerView.addSubview(vStack)
         vStack.activateFillConstraint(with: deliverContainerView, margin: 8)
         
-        let fromStack = ViewMaker.makeStackView(axios: .horizontal,distribution:.fillEqually, aligment: .fill)
+        let fromStack = ViewMaker.makeStackView(axios: .horizontal, distribution: .fillEqually, aligment: .fill)
         fromStack.addArrangedSubview(self.labelTitleFrom)
         fromStack.addArrangedSubview(self.labelFrom)
         
-        let destinationStack = ViewMaker.makeStackView(axios: .horizontal,distribution:.fillEqually, aligment: .fill)
+        let destinationStack = ViewMaker.makeStackView(axios: .horizontal, distribution: .fillEqually, aligment: .fill)
         destinationStack.addArrangedSubview(self.labelTitleTo)
         destinationStack.addArrangedSubview(self.labelTo)
         
@@ -201,10 +201,9 @@ extension DeliveryDetailViewController {
         return deliverContainerView
     }
     
-    
-    func makeDeliveryStatusContainer()->UIView {
+    func makeDeliveryStatusContainer() -> UIView {
         let statusContainerView = makeContainer()
-        let vStack = ViewMaker.makeStackView(aligment:.leading, space: 12)
+        let vStack = ViewMaker.makeStackView(aligment: .leading, space: 12)
         
         statusContainerView.addSubview(vStack)
         vStack.activateFillConstraint(with: statusContainerView, margin: 8)
@@ -221,9 +220,9 @@ extension DeliveryDetailViewController {
         return statusContainerView
     }
     
-    func makeDeliveryPriceContainer()->UIView {
+    func makeDeliveryPriceContainer() -> UIView {
         let priceContainerView = makeContainer()
-        let hStack = ViewMaker.makeStackView(axios:.horizontal,distribution: .fillEqually, space: 8)
+        let hStack = ViewMaker.makeStackView(axios: .horizontal, distribution: .fillEqually, space: 8)
         
         priceContainerView.addSubview(hStack)
         hStack.activateFillConstraint(with: priceContainerView, margin: 8)
@@ -233,6 +232,5 @@ extension DeliveryDetailViewController {
         
         return priceContainerView
     }
-    
     
 }

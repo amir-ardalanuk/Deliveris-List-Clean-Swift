@@ -9,24 +9,20 @@
 import Foundation
 import UIKit
 
-extension UITableView
-{
+extension UITableView {
 
-    func register<T: UITableViewCell>(_ type: T.Type) where T: ReusableView,T:NibLoadable
-    {
+    func register<T: UITableViewCell>(_ type: T.Type) where T: ReusableView, T: NibLoadable {
         let nib = UINib(nibName: T.nibName, bundle: nil)
 
         self.register(nib, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    func reloadData(completion: @escaping ()->())
-    {
+    func reloadData(completion: @escaping () -> Void) {
 
-        UIView.animate(withDuration: 0, animations: { self.reloadData() })
-        { _ in completion() }
+        UIView.animate(withDuration: 0, animations: { self.reloadData() }, completion: { _ in completion() })
     }
 
-    func performUpdate(_ update: ()->Void, completion: (()->Void)?) {
+    func performUpdate(_ update: () -> Void, completion: (() -> Void)?) {
 
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
@@ -39,21 +35,17 @@ extension UITableView
         CATransaction.commit()
     }
 
-
-    func snapshotRows(at indexPaths: Set<IndexPath>) -> UIImage?
-    {
+    func snapshotRows(at indexPaths: Set<IndexPath>) -> UIImage? {
         guard !indexPaths.isEmpty else { return nil }
         var rect = self.rectForRow(at: indexPaths.first!)
-        for indexPath in indexPaths
-        {
+        for indexPath in indexPaths {
             let cellRect = self.rectForRow(at: indexPath)
             rect = rect.union(cellRect)
         }
 
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        for indexPath in indexPaths
-        {
+        for indexPath in indexPaths {
             let cell = self.cellForRow(at: indexPath)
             cell?.layer.bounds.origin.y = self.rectForRow(at: indexPath).origin.y - rect.minY
             cell?.layer.render(in: context)
@@ -69,7 +61,7 @@ extension UITableView
 
 extension UITableView {
 
-    func dequeueReusableCell<T: UITableViewCell>(indexPath: IndexPath) -> T where  T:ReusableView {
+    func dequeueReusableCell<T: UITableViewCell>(indexPath: IndexPath) -> T where  T: ReusableView {
         let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as! T
         return cell
     }

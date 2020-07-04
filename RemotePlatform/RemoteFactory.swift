@@ -12,26 +12,25 @@ import Swinject
 
 public class RemoteFactory {
     
-    let network:NetworkRequest
-    public init(network:NetworkRequest) {
+    let network: NetworkRequest
+    public init(network: NetworkRequest) {
         self.network = network
     }
     
-    public func deliveryUsecase()->DeliveryUsecaseImpl {
+    public func deliveryUsecase() -> DeliveryUsecaseImpl {
         return DeliveryUsecaseImpl(network: self.network)
     }
+
 }
 
-public class RemoteFactoryAssembly : Assembly {
-    public init(){
+public class RemoteFactoryAssembly: Assembly {
+    public init() {
         
     }
     public func assemble(container: Container) {
-        container.register(RemoteFactory.self) { (r) in
-            let networkRequest = r.resolve(Requester.self)!
+        container.register(RemoteFactory.self) { (resolver) in
+            let networkRequest = resolver.resolve(Requester.self)!
             return RemoteFactory(network: networkRequest)
         }.inObjectScope(.weak)
     }
-    
-    
 }

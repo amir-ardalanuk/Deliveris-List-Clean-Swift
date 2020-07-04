@@ -8,5 +8,5 @@
 
 import Foundation
 protocol Mapper {
-    func map<T:Decodable>(data:Data)->T?
+    func map<T: Decodable>(data: Data) -> T?
 }

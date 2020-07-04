@@ -10,16 +10,15 @@ import Foundation
 import RxSwift
 import Swinject
 
-open class UserDefaultStorage: StorageUsecase  {
-    
-    
-    
+open class UserDefaultStorage: StorageUsecase {
     
     public var keyUpdated = PublishSubject<String>()
     
-    public init(){}
+    public init() {
+        
+    }
     
-    public func retrive<T>(key: String, type: T.Type) -> Observable<T?> where T : Decodable, T : Encodable {
+    public func retrive<T>(key: String, type: T.Type) -> Observable<T?> where T: Decodable, T: Encodable {
         Observable.create { (observer) -> Disposable in
             
             if let data = UserDefaults.standard.value(forKey: key) as? Data,
@@ -32,13 +31,13 @@ open class UserDefaultStorage: StorageUsecase  {
         }
     }
     
-    public func save<T>(key: String, value: T) where T : Decodable, T : Encodable {
+    public func save<T>(key: String, value: T) where T: Decodable, T: Encodable {
         if let data = try? JSONEncoder().encode(value) {
-            UserDefaults.standard.set(data, forKey:key)
+            UserDefaults.standard.set(data, forKey: key)
         }
     }
     
-    public func retrive<T>(key: String, type: T.Type) -> T? where T : Decodable, T : Encodable {
+    public func retrive<T>(key: String, type: T.Type) -> T? where T: Decodable, T: Encodable {
         if let data = UserDefaults.standard.value(forKey: key) as? Data,
             let dataModel = try? JSONDecoder().decode(T.self, from: data) {
             return  dataModel
@@ -59,10 +58,10 @@ open class UserDefaultStorage: StorageUsecase  {
     }
     
 }
-open class UserDefaultStorageAssembly : Assembly {
-    public init(){}
+open class UserDefaultStorageAssembly: Assembly {
+    public init() {}
     public func assemble(container: Container) {
-        container.register(UserDefaultStorage.self) { (r) in
+        container.register(UserDefaultStorage.self) { (_) in
             return UserDefaultStorage()
         }.inObjectScope(.weak)
     }

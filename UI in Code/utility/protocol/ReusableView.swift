@@ -23,10 +23,8 @@ extension ReusableView where Self: UIViewController {
         return String(describing: self)
     }
     
-    static func controller(storyname : String)->UIViewController{
+    static func controller(storyname: String) -> UIViewController {
 
             UIStoryboard.init(name: storyname, bundle: nil).instantiateViewController(identifier: reuseIdentifier)
     }
 }
-
-

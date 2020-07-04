@@ -9,11 +9,10 @@
 import Foundation
 import XMLParsing
 
-struct XMLMapper:Mapper {
-    func map<T>(data: Data) -> T? where T : Decodable {
+struct XMLMapper: Mapper {
+    func map<T>(data: Data) -> T? where T: Decodable {
         let cllss = T.self
-        return try? XMLDecoder().decode(cllss, from: data)
+        let decode = try? XMLDecoder().decode(cllss, from: data)
+        return decode
     }
-    
-    
 }

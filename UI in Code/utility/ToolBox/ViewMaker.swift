@@ -8,16 +8,13 @@
 
 import UIKit
 struct ViewMaker {
-    static func makeStackView(axios:NSLayoutConstraint.Axis = .vertical,
-                       distribution:UIStackView.Distribution = .fill,
-                       aligment:UIStackView.Alignment = .fill,
-                        space : CGFloat = 0)->UIStackView{
+    static func makeStackView(axios: NSLayoutConstraint.Axis = .vertical, distribution: UIStackView.Distribution = .fill, aligment: UIStackView.Alignment = .fill, space: CGFloat = 0) -> UIStackView {
         let sv = UIStackView()
         sv.axis  = axios
         sv.alignment = aligment
         sv.distribution = UIStackView.Distribution.fill
         sv.spacing = space
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }
 }

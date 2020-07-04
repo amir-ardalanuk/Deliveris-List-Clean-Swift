@@ -11,18 +11,17 @@ import NetworkPlatform
 import Domain
 import RxSwift
 
-
 public class DeliveryUsecaseImpl {
-    let network:NetworkRequest
+    let network: NetworkRequest
     
-    public init(network:NetworkRequest) {
+    public init(network: NetworkRequest) {
         self.network = network
     }
 }
 
-extension DeliveryUsecaseImpl : DeliveryUsecases {
+extension DeliveryUsecaseImpl: DeliveryUsecases {
     public func getDeliveryList() -> Observable<[DeliveryEntity]> {
-        let provider = DefaultNetworkProvider.make(route: deliveryRoutes.deliveryList.route.endpoint)
+        let provider = DefaultNetworkProvider.make(route: DeliveryRoutes.deliveryList.route.endpoint)
         return network.makeRXRequest(provider: provider, ofType: [DeliveryEntity].self).asObservable()
     }
 }

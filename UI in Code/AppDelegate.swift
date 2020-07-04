@@ -13,16 +13,19 @@ import Swinject
 class AppDelegate: UIResponder {
     let mainAssembler = MainAssembler()
     var window: UIWindow?
+    var app: Application!
     
     override init() {
         super.init()
+        app = Application()
     }
 }
 
-extension AppDelegate :UIApplicationDelegate {
+extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        setupWindow()
+        //setupWindow()
+        app.setupInitailController()
         let statusBar =  UIView()
         
         statusBar.frame = UIApplication.shared.statusBarFrame
@@ -33,15 +36,4 @@ extension AppDelegate :UIApplicationDelegate {
         return true
     }
     
-    func setupWindow(){
-        let window  = UIWindow(frame: UIScreen.main.bounds)
-        let homeRouter = mainAssembler.resolver.resolve(HomeNavigationDefault.self)
-        homeRouter?.deliveryList()
-        
-        window.backgroundColor = .black
-        window.rootViewController = homeRouter?.navigationController
-        window.makeKeyAndVisible()
-        self.window = window
-        
-    }
 }

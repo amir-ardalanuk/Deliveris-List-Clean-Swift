@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 public protocol StorageUsecase {
-    func save<T:Codable>(key:String,value:T)
-    func remove(key:String)
-    func retrive<T:Codable>(key:String,type:T.Type)-> T?
-    func updatedStatus(key:String)
-    func statusChanged()->Observable<String>
+    func save<T: Codable>(key: String, value: T)
+    func remove(key: String)
+    func retrive<T: Codable>(key: String, type: T.Type) -> T?
+    func updatedStatus(key: String)
+    func statusChanged() -> Observable<String>
 }

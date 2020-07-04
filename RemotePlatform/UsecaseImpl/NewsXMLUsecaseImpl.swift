@@ -12,27 +12,35 @@ import NetworkPlatform
 import RxSwift
 import Swinject
 
-public struct NewsXMLUsecaseImpl : Domain.NewsXMLUsecase {
+public struct NewsXMLUsecaseImpl: Domain.NewsXMLUsecase {
+ 
     
-    let requester : NetworkRequest
-    init(requester:NetworkRequest) {
+    let requester: NetworkRequest
+    init(requester: NetworkRequest) {
         self.requester = requester
     }
     
-    public func getNewsXMLRequest() -> Observable<XMLNewsEntity> {
-        let provider = DefaultNetworkProvider.make(route: TCETMCRout.codal.route.endpoint)
-        return requester.makeRXRequest(provider: provider, ofType: XMLNewsEntity.self).asObservable()
+    public func getXMLVarzesh3Request() -> Observable<XMLVerzesh3Entity> {
+        let provider = DefaultNetworkProvider.make(route: Varzesh3.iranNews.route.endpoint)
+        return requester.makeRXRequest(provider: provider, ofType: XMLVerzesh3Entity.self).asObservable()
     }
+    
+    public func getXMLFFIRequest() -> Observable<XMLFFIREntity> {
+          let provider = DefaultNetworkProvider.make(route: FFIR.allNews.route.endpoint)
+            return requester.makeRXRequest(provider: provider, ofType: XMLFFIREntity.self).asObservable()
+     }
+     
 }
 
-public class RepositoryNewsXMLUsecase:Assembly{
-    public init(){}
+public class RemoteNewsXMLUsecase: Assembly {
+    
+    public init() {
+        
+    }
     public func assemble(container: Container) {
-        container.register(NewsXMLUsecaseImpl.self){ r in
-            let network = r.resolve(Requester.self, name: XMLRequesterAssembly.name)
-            return NewsXMLUsecaseImpl(requester:network!)
+        container.register(RemotePlatform.NewsXMLUsecaseImpl.self) { resolver in
+            let network = resolver.resolve(Requester.self, name: XMLRequesterAssembly.name)
+            return NewsXMLUsecaseImpl(requester: network!)
         }
     }
-    
-    
 }

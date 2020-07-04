@@ -12,54 +12,54 @@ import RxSwift
 import StoragePlatform
 import Swinject
 
-public class FavoriteUsecaseImpl : Domain.FavoriteUsecase {
+public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
     
-    let FAV_KEY = "FAV_ID"
-    let storage : StorageUsecase
+    let favKey = "FAV_ID"
+    let storage: StorageUsecase
     
-    init(storage:StorageUsecase) {
+    init(storage: StorageUsecase) {
         self.storage = storage
     }
     
-    public func addToFavorite(id: String) {
-        var items = storage.retrive(key: FAV_KEY, type:[String].self) ?? []
-        items.append(id)
-        storage.save(key: FAV_KEY, value: items)
-        storage.updatedStatus(key: FAV_KEY)
+    public func addToFavorite(id key: String) {
+        var items = storage.retrive(key: favKey, type: [String].self) ?? []
+        items.append(key)
+        storage.save(key: favKey, value: items)
+        storage.updatedStatus(key: favKey)
     }
     
-    public func isFavorite(_ id: String) -> Observable<Bool> {
-        let items = storage.retrive(key: FAV_KEY, type:[String].self) ?? []
-        return Observable.from(optional: items.filter{ $0 == id}.first != nil)
+    public func isFavorite(_ key: String) -> Observable<Bool> {
+        let items = storage.retrive(key: favKey, type: [String].self) ?? []
+        return Observable.from(optional: items.filter { $0 == key}.first != nil)
     }
     
     public func retriveFavoritesIds() -> Observable<[String]> {
-        let items = storage.retrive(key: FAV_KEY, type:[String].self) ?? []
+        let items = storage.retrive(key: favKey, type: [String].self) ?? []
         return Observable.from(optional: items )
     }
     
-    public func removeFromFavorite(id: String) {
-        var items = storage.retrive(key: FAV_KEY, type:[String].self) ?? []
-        let idx = items.firstIndex{ $0 == id}
+    public func removeFromFavorite(id key: String) {
+        var items = storage.retrive(key: favKey, type: [String].self) ?? []
+        let idx = items.firstIndex { $0 == key}
         guard let index = idx else {return}
         items.remove(at: index)
-        storage.save(key: FAV_KEY, value: items)
-        storage.updatedStatus(key: FAV_KEY)
+        storage.save(key: favKey, value: items)
+        storage.updatedStatus(key: favKey)
     }
     
     public func changeStorageState() -> Observable<String> {
-        return storage.statusChanged().filter{$0 == self.FAV_KEY}
+        return storage.statusChanged().filter { $0 == self.favKey }
     }
-    
-    
-    
 }
 
-public class LocalFavoriteUsecase:Assembly {
-    public init(){}
+public class LocalFavoriteUsecase: Assembly {
+    public init() {
+        
+    }
+    
     public func assemble(container: Container) {
-        container.register(FavoriteUsecaseImpl.self) { (r) in
-            let storage = r.resolve(UserDefaultStorage.self)
+        container.register(FavoriteUsecaseImpl.self) { (resolver) in
+            let storage = resolver.resolve(UserDefaultStorage.self)
             return FavoriteUsecaseImpl(storage: storage!)
         }.inObjectScope(.weak)
     }

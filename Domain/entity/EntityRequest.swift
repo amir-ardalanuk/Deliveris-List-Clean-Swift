@@ -8,6 +8,6 @@
 
 import Foundation
 protocol EntityRequest {
-    associatedtype output
-    associatedtype input
+    associatedtype Output
+    associatedtype Input
 }

@@ -8,15 +8,13 @@
 
 import Foundation
 
-struct JsonMapper:Mapper {
-    func map<T>(data: Data) -> T? where T : Decodable{
+struct JsonMapper: Mapper {
+    func map<T>(data: Data) -> T? where T: Decodable {
         let cllss = T.self
         // *** to decode json data for debugginh
         //let json = try? JSONSerialization.jsonObject(with: callback?.data as? Data ?? Data(), options: []) as? [String : Any]
         // *** END
         let model = try? JSONDecoder().decode(cllss, from: data)
         return model
-    }
-    
-    
+    }   
 }

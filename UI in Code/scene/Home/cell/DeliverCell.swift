@@ -8,9 +8,9 @@
 
 import UIKit
 import Kingfisher
-class DeliveryCell : UITableViewCell {
+class DeliveryCell: UITableViewCell {
     
-    var lblTitleFrom : UILabel = {
+    var lblTitleFrom: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 14)
@@ -19,7 +19,7 @@ class DeliveryCell : UITableViewCell {
         return label
     }()
     
-    var lblTitleTo : UILabel = {
+    var lblTitleTo: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 14)
@@ -27,7 +27,7 @@ class DeliveryCell : UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var lblFrom : UILabel = {
+    var lblFrom: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 14)
@@ -36,7 +36,7 @@ class DeliveryCell : UITableViewCell {
         return label
     }()
     
-    var lblTo : UILabel = {
+    var lblTo: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 14)
@@ -45,7 +45,7 @@ class DeliveryCell : UITableViewCell {
         return label
     }()
     
-    var imgView : UIImageView = {
+    var imgView: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .red
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +54,7 @@ class DeliveryCell : UITableViewCell {
         return image
     }()
     
-    var lblPrice : UILabel = {
+    var lblPrice: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
         label.font = UIFont.systemFont(ofSize: 14)
@@ -64,62 +64,62 @@ class DeliveryCell : UITableViewCell {
         return label
     }()
     
-    var favoriteImageView : UIImageView = {
+    var favoriteImageView: UIImageView = {
         let img = UIImageView()
         img.tintColor = .red
         img.image =  #imageLiteral(resourceName: "icons8-love-96")
-        img.translatesAutoresizingMaskIntoConstraints = false;
+        img.translatesAutoresizingMaskIntoConstraints = false
         img.widthAnchor.constraint(equalToConstant: 16).isActive = true
         img.heightAnchor.constraint(equalToConstant: 16).isActive = true
         
         return img
     }()
     
-    var mainHorizontalStack : UIStackView = {
+    var mainHorizontalStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.horizontal
         sv.alignment = UIStackView.Alignment.center
         sv.spacing = 16
         sv.distribution = UIStackView.Distribution.fill
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
-    var fromHorizontalStack : UIStackView = {
+    var fromHorizontalStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.horizontal
         sv.alignment = UIStackView.Alignment.fill
         sv.distribution = UIStackView.Distribution.fill
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
-    var destinationAndPriceStack : UIStackView = {
+    var destinationAndPriceStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.horizontal
         sv.alignment = UIStackView.Alignment.fill
         sv.distribution = UIStackView.Distribution.fill
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
-    var titlesVerticalStack : UIStackView = {
+    var titlesVerticalStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.vertical
         sv.alignment = UIStackView.Alignment.fill
         sv.distribution = UIStackView.Distribution.fill
         sv.spacing = 16
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
-    var verticalFromAndToStack : UIStackView = {
+    var verticalFromAndToStack: UIStackView = {
         let sv = UIStackView()
         sv.axis  = NSLayoutConstraint.Axis.vertical
         sv.alignment = UIStackView.Alignment.fill
         sv.distribution = UIStackView.Distribution.fill
         sv.spacing = 16
-        sv.translatesAutoresizingMaskIntoConstraints = false;
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
@@ -133,21 +133,21 @@ class DeliveryCell : UITableViewCell {
         setup()
     }
     
-    func setup(){
+    func setup() {
         self.addViews()
         self.makeViewsConstaint()
     }
 }
 
 extension DeliveryCell {
-    func config(data : DeliveryModel){
+    func config(data: DeliveryModel) {
         lblTo.text = data.to
         lblFrom.text = data.from
         lblPrice.text = data.price
         
-        if let imgUrl = URL(string:data.imageUrl ?? "") {
+        if let imgUrl = URL(string: data.imageUrl ?? "") {
             imgView.kf.setImage(with: imgUrl)
-        }else{
+        } else {
             imageView?.image =  #imageLiteral(resourceName: "page-not-found")
         }
         favoriteImageView.isHidden = !data.fav
@@ -155,13 +155,12 @@ extension DeliveryCell {
     }
 }
 
-
 extension DeliveryCell {
     
-    func mainHorizontalStackConstraint(){
-        let bottomConstraint = mainHorizontalStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor,constant: -10)
+    func mainHorizontalStackConstraint() {
+        let bottomConstraint = mainHorizontalStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10)
         let constraints = [
-            mainHorizontalStack.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor,constant: 10),
+            mainHorizontalStack.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             mainHorizontalStack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 10),
             bottomConstraint,
             mainHorizontalStack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10)
@@ -171,7 +170,7 @@ extension DeliveryCell {
         
     }
     
-    func imageViewConstraint(){
+    func imageViewConstraint() {
         let constraints = [
             imgView.widthAnchor.constraint(equalTo: self.mainHorizontalStack.widthAnchor, multiplier: 0.2),
             imgView.aspectRation(1.0)
@@ -180,12 +179,12 @@ extension DeliveryCell {
         
     }
 
-    func verticalFromAndToStackConstraint(){
+    func verticalFromAndToStackConstraint() {
         verticalFromAndToStack.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: NSLayoutConstraint.Axis.horizontal)
         verticalFromAndToStack.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 250), for: NSLayoutConstraint.Axis.horizontal)
     }
     
-    func titlesVerticalStackConstraint(){
+    func titlesVerticalStackConstraint() {
         titlesVerticalStack.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal)
         titlesVerticalStack.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal)
         let constraints = [
@@ -194,9 +193,7 @@ extension DeliveryCell {
                NSLayoutConstraint.activate(constraints)
     }
     
-    
-    
-    func addViews(){
+    func addViews() {
         
         self.contentView.addSubview(mainHorizontalStack)
         
@@ -218,7 +215,7 @@ extension DeliveryCell {
         
     }
     
-    func makeViewsConstaint(){
+    func makeViewsConstaint() {
         mainHorizontalStackConstraint()
         titlesVerticalStackConstraint()
         verticalFromAndToStackConstraint()

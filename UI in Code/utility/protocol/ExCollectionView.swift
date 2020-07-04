@@ -11,16 +11,18 @@ import UIKit
 
 extension UICollectionView {
 
-    func dequeueReusableCell<T: UICollectionViewCell>(indexPath: IndexPath) -> T where T:ReusableView {
+    func dequeueReusableCell<T: UICollectionViewCell>(indexPath: IndexPath) -> T where T: ReusableView {
         print(T.reuseIdentifier)
         let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as! T
         return cell
     }
 
-    func reloadData(completion: @escaping ()->())
-    {
-        UIView.animate(withDuration: 0, animations: { self.reloadData() })
-        { _ in completion() }
+    func reloadData(completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0, animations: {
+            self.reloadData()
+        }, completion: {_ in
+            completion()
+        })
     }
 }
 

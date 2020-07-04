@@ -13,11 +13,11 @@ extension UIView {
         return NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: self, attribute: .width, multiplier: ratio, constant: 0)
     }
     
-    func radius(_ value:CGFloat){
+    func radius(_ value: CGFloat) {
         self.layer.cornerRadius = value
     }
     
-    func makeConstraint(parent: UIView , margin: CGFloat)->[NSLayoutConstraint]{
+    func makeConstraint(parent: UIView, margin: CGFloat) -> [NSLayoutConstraint] {
         let constraint = [
             self.topAnchor.constraint(equalTo: parent.topAnchor, constant: margin),
             self.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -margin),
@@ -27,8 +27,7 @@ extension UIView {
         return constraint
     }
     
-    
-    func makeConstraintSafeArea(parent: UIView , margin: CGFloat)->[NSLayoutConstraint]{
+    func makeConstraintSafeArea(parent: UIView, margin: CGFloat) -> [NSLayoutConstraint] {
         let constraint = [
             self.topAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.topAnchor, constant: margin),
             self.bottomAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.bottomAnchor, constant: -margin),
@@ -38,14 +37,13 @@ extension UIView {
         return constraint
     }
     
-    
-    func activateFillConstraint(with parent:UIView,margin:CGFloat ){
+    func activateFillConstraint(with parent: UIView, margin: CGFloat) {
         NSLayoutConstraint.activate(
             makeConstraint(parent: parent, margin: margin)
         )
     }
     
-    func activateFillSafeAreaConstraint(with parent:UIView,margin:CGFloat ){
+    func activateFillSafeAreaConstraint(with parent: UIView, margin: CGFloat) {
         NSLayoutConstraint.activate(
             makeConstraintSafeArea(parent: parent, margin: margin)
         )

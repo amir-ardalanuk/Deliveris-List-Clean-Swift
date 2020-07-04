@@ -8,10 +8,9 @@
 
 import Foundation
 
-
 public protocol BaseNetwork {
-    func load(url:String, method:BaseNetworkMethod, payload :Any?,decoder:BaseNetworkDecoder,complete:@escaping (BaseNetworkCallBack)->Void)
+    func load(url: String, method: BaseNetworkMethod, payload: Any?, decoder: BaseNetworkDecoder, complete: @escaping (BaseNetworkCallBack) -> Void)
     func cancel()
     
-    func isConnectedToIntenet()->Bool
+    func isConnectedToIntenet() -> Bool
 }

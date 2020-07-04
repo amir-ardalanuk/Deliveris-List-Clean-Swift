@@ -8,54 +8,53 @@
 
 import Foundation
 
-public enum BaseNetworkMethod:String {
+public enum BaseNetworkMethod: String {
     case post = "POST"
     case get = "GET"
     case delete = "DELETE"
     case patch = "PATCH"
 }
 
-public enum BaseNetworkDecoder:String {
+public enum BaseNetworkDecoder: String {
     case json = "Json"
     case param = "Param"
 }
 
-
-public enum BaseNetworkCallBack{
+public enum BaseNetworkCallBack {
     case success(BaseNetworkResult)
     case failure(BaseNetworkResult)
     
-    var data : Any? {
+    var data: Any? {
         switch self {
-            case .failure(let e):
-                return e.data
-            case .success(let s):
-                return s.data
-            }
-    }
-    
-    var statusCode : Int?{
-        switch self {
-        case .failure(let e):
-            return e.status
-        case .success(let s):
-            return s.status
+        case.failure(let error):
+            return error.data
+        case.success(let success):
+            return success.data
         }
     }
     
-    var error : Error?{
-           switch self {
-           case .failure(let e):
-            return e.error
-           case .success(let s):
-            return s.error
-           }
-       }
+    var statusCode: Int? {
+        switch self {
+        case .failure(let error):
+            return error.status
+        case .success(let success):
+            return success.status
+        }
+    }
+    
+    var error: Error? {
+        switch self {
+        case .failure(let error):
+            return error.error
+        case .success(let success):
+            return success.error
+        }
+    }
 }
 
 public struct BaseNetworkResult {
-    public var status:Int?
-    public var error:Error?
-    public var data:Data?
-   
+    public var status: Int?
+    public var error: Error?
+    public var data: Data?
+    
 }

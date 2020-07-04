@@ -7,19 +7,19 @@
 //
 
 import Foundation
-enum NetworkStatusError:Int,Error{
-    case Bad_Request                                = 400
-    case Not_Authorized_to_access_this_service      = 401
-    case Method_not_supported                       = 405
-    case Token_expired                              = 420
-    case Token_Already_Exist                        = 421
-    case Server_error                               = 500
-    case Invalid_credentials_supplied               = 600
-    case User_Expired                               = 601
-    case Data_Overused                              = 602
-    case Maximum_Limitation_Per_User                = 603
-    case Pin_Depleted                               = 604
-    case Already_Login                              = 605
-    case User_is_not_logged_in                      = 606
-    case PIN_is_disabled                            = 607
+enum NetworkStatusError: Int, Error {
+    case badRequest                                = 400
+    case notAuthorizedToAccessThisService      = 401
+    case methodNotSupported                       = 405
+    case tokenExpired                              = 420
+    case tokenAlreadyExist                        = 421
+    case serverError                               = 500
+    case invalidCredentialsSupplied               = 600
+    case userExpired                               = 601
+    case dataOverused                              = 602
+    case maximumLimitationPerUser                = 603
+    case pinDepleted                               = 604
+    case alreadyLogin                              = 605
+    case userIsNotLoggedIn                      = 606
+    case pinIsDisabled                            = 607
 }

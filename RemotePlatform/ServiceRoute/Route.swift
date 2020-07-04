@@ -8,29 +8,44 @@
 
 import Foundation
 
-enum deliveryRoutes :String, RouteFactoryMethod {
+enum DeliveryRoutes: String, RouteFactoryMethod {
 
     case deliveryList = "/v2/deliveries"
     
     internal var baseUrl: String {
-         get{
+         get {
              return "https://mock-api-mobile.dev.lalamove.com"
          }
      }
+    
     var route: RouteURL {
         return Route(endpoint: baseUrl + self.rawValue)
     }
     
 }
 
-enum TCETMCRout:String,RouteFactoryMethod {
+enum Varzesh3: String, RouteFactoryMethod {
     internal var baseUrl: String {
-        get{
-            return "http://www.tsetmc.com/tsev2/"
+        get {
+            return "https://www.varzesh3.com/rss/"
         }
     }
     
-    case codal = "feed/CodalFeed.aspx?type=RSS"
+    case iranNews = "domesticFootball"
+    
+    var route: RouteURL {
+        return Route(endpoint: baseUrl + self.rawValue)
+    }
+}
+
+enum FFIR: String, RouteFactoryMethod {
+    internal var baseUrl: String {
+        get {
+            return "http://ffiri.ir/fa/rss/"
+        }
+    }
+    
+    case allNews = "allnews"
     
     var route: RouteURL {
         return Route(endpoint: baseUrl + self.rawValue)

@@ -8,9 +8,7 @@
 
 import UIKit
 import Swinject
-class MainNavigationController : UINavigationController {
- 
-    
+class MainNavigationController: UINavigationController {
  
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -32,25 +30,24 @@ class MainNavigationController : UINavigationController {
         setup()
     }
     
-    
-    
-    func setup(){
+    func setup() {
         self.navigationBar.tintColor = .black
         self.navigationBar.barTintColor = .white
     }
 }
-class CustomHomeNavigationBar:UINavigationBar {
+
+class CustomHomeNavigationBar: UINavigationBar {
     
-    var title : String? {
-        get{
+    var title: String? {
+        get {
             return label.text
         }
-        set{
+        set {
             self.label.text = newValue ?? "--"
         }
     }
     
-    let label : UILabel = {
+    let label: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -67,13 +64,13 @@ class CustomHomeNavigationBar:UINavigationBar {
         setup()
     }
     
-    func setup(){
+    func setup() {
         self.addSubview(label)
         labelConstraint()
         self.backgroundColor = .white
     }
     
-    private func labelConstraint(){
+    private func labelConstraint() {
         let constraints = [
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
@@ -82,13 +79,11 @@ class CustomHomeNavigationBar:UINavigationBar {
     }
 }
 
-class MainNavigationAssembly:Assembly {
+class MainNavigationAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(MainNavigationController.self) { (r) in
+        container.register(MainNavigationController.self) { (_) in
             return MainNavigationController()
         }
     }
     
-    
 }
-

@@ -10,12 +10,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class HomeViewController: UIViewController {
     
     let getDerliveryList = PublishSubject<Void>()
     let bag = DisposeBag()
-    let loadingBar : UIRefreshControl = {
+    let loadingBar: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Loading...")
         return refreshControl
@@ -28,9 +27,9 @@ class HomeViewController: UIViewController {
     }()
     
     var datasource = DeliveryDatasource()
-    var viewModel : HomeViewModel!
+    var viewModel: HomeViewModel!
     
-    init(viewModel : HomeViewModel) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -42,7 +41,6 @@ class HomeViewController: UIViewController {
 
 //LifeCycle
 extension HomeViewController {
-    
     
     override func loadView() {
         super.loadView()
@@ -66,7 +64,7 @@ extension HomeViewController {
 // UI
 extension HomeViewController {
     
-    func tableViewConfig(){
+    func tableViewConfig() {
         tableView.delegate = datasource
         tableView.dataSource = datasource
         tableView.rowHeight = UITableView.automaticDimension
@@ -76,7 +74,7 @@ extension HomeViewController {
         tableView.reloadData()
     }
     
-    func makeTableViewConstaint(){
+    func makeTableViewConstaint() {
         self.view.addSubview(tableView)
         tableView.activateFillSafeAreaConstraint(with: self.view, margin: 0)
     }
@@ -85,7 +83,7 @@ extension HomeViewController {
 //Data Binding
 extension HomeViewController {
     
-    func dataBinding(){
+    func dataBinding() {
         let input = HomeViewModel.Input(
             getList: getDerliveryList.asDriverOnErrorJustComplete(),
             selectedItem: tableView.rx.itemSelected.asDriver())
@@ -96,7 +94,7 @@ extension HomeViewController {
         
     }
 }
-extension Reactive where Base:UITableView {
+extension Reactive where Base: UITableView {
     internal var homeDataSourceList: Binder<[DeliveryModel]> {
         return Binder(self.base, binding: { (view, data) in
             if let datasource = view.dataSource as? DeliveryDatasource {
@@ -110,4 +108,3 @@ extension Reactive where Base:UITableView {
         })
     }
 }
-

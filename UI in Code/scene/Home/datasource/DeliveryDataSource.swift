@@ -10,17 +10,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class DeliveryDatasource: NSObject, UITableViewDelegate,UITableViewDataSource {
+class DeliveryDatasource: NSObject, UITableViewDelegate, UITableViewDataSource {
     
-
-    private var list : [DeliveryModel] = [DeliveryModel]()
+    private var list: [DeliveryModel] = [DeliveryModel]()
     public var selectItem = BehaviorSubject<IndexPath?>(value: nil)
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
     
-    func update(_ list :[DeliveryModel]){
+    func update(_ list: [DeliveryModel]) {
         self.list = list
     }
     
@@ -29,15 +28,9 @@ class DeliveryDatasource: NSObject, UITableViewDelegate,UITableViewDataSource {
         cell.config(data: list[indexPath.row])
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        selectItem.onNext(indexPath)
-//    }
 }
 
-
-
-extension Reactive where Base:DeliveryDatasource {
+extension Reactive where Base: DeliveryDatasource {
     internal var homeDataSourceList: Binder<[DeliveryModel]> {
         return Binder(self.base, binding: { (view, data) in
             view.update(data)

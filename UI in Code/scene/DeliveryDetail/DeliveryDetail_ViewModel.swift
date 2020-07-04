@@ -11,7 +11,7 @@ import Domain
 import RxCocoa
 import RxSwift
 
-class DeliveryDetailViewModel:ViewModel {
+class DeliveryDetailViewModel: ViewModel {
     
     let bag = DisposeBag()
     let navigation: DeliveryDetailNavigation
@@ -19,20 +19,10 @@ class DeliveryDetailViewModel:ViewModel {
     let favoriteServices: FavoriteUsecase
     let favStatus = BehaviorSubject<Bool>(value: false)
    
-    init(navigation:DeliveryDetailNavigation,favoriteServices:FavoriteUsecase , deliveryItem : DeliveryEntity) {
+    init(navigation: DeliveryDetailNavigation, favoriteServices: FavoriteUsecase, deliveryItem: DeliveryEntity) {
         self.navigation = navigation
         self.deliveryItem = deliveryItem
         self.favoriteServices = favoriteServices
-        
-        self.favStatus.subscribe(onNext: { (state) in
-            print(state)
-        }, onError: { (err) in
-            print(err)
-        }, onCompleted: {
-             print("comp")
-        }) {
-            print("DIS")
-        }.disposed(by: bag)
     }
     
     func transform(input: DeliveryDetailViewModel.Input) -> DeliveryDetailViewModel.Output {
@@ -43,7 +33,7 @@ class DeliveryDetailViewModel:ViewModel {
                 if isFav {
                     self.favoriteServices.removeFromFavorite(id: id)
                     return false
-                }else{
+                } else {
                     self.favoriteServices.addToFavorite(id: id)
                     return true
                 }
@@ -56,10 +46,10 @@ class DeliveryDetailViewModel:ViewModel {
             self.favStatus.onNext(state)
         }).disposed(by: bag)
         
-        let favTitle = favStatus.asObservable().map{
+        let favTitle = favStatus.asObservable().map {
                        $0 ? "remove from Favorite" : "add to Favorite" }
         
-        let favTint = favStatus.asObservable().map{
+        let favTint = favStatus.asObservable().map {
             $0 ? UIColor.lightGray : UIColor.red }
     
         let fromDeliver = Driver.from(optional: deliveryItem.route?.start)
@@ -68,25 +58,29 @@ class DeliveryDetailViewModel:ViewModel {
         let pictureDriver = Driver.from(optional: URL(string: deliveryItem.goodsPicture ?? ""))
         let title = Driver.from(optional: "Goods to Deliver")
         
-        return Output(from: fromDeliver, to: toDriver, title: title, picture: pictureDriver, price: priceDriver, favTitle: favTitle,fav: favStatus.asObservable(), favTint: favTint)
+        return Output(from: fromDeliver,
+                      to: toDriver,
+                      title: title,
+                      picture: pictureDriver,
+                      price: priceDriver,
+                      favTitle: favTitle, fav: favStatus.asObservable(), favTint: favTint)
     }
-    
     
 }
 
 extension DeliveryDetailViewModel {
     struct Input {
-        let changeFavoriteStatus:Driver<Void>
+        let changeFavoriteStatus: Driver<Void>
     }
     
     struct Output {
         let from: Driver<String>
         let to: Driver<String>
-        let title:Driver<String>
-        let picture:Driver<URL>
+        let title: Driver<String>
+        let picture: Driver<URL>
         let price: Driver<String>
-        let favTitle:Observable<String>
-        let fav:Observable<Bool>
-        let favTint:Observable<UIColor>
+        let favTitle: Observable<String>
+        let fav: Observable<Bool>
+        let favTint: Observable<UIColor>
     }
 }

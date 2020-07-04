@@ -9,10 +9,10 @@
 import Foundation
 
 struct DeliveryModel {
-    var imageUrl : String?
-    var from:String?
-    var to:String?
-    var price:String?
-    var fav:Bool = false
-    var id:String
+    var imageUrl: String?
+    var from: String?
+    var to: String?
+    var price: String?
+    var fav: Bool = false
+    var id: String
 }

@@ -10,5 +10,6 @@ import Foundation
 import RxSwift
 
 public protocol NewsXMLUsecase {
-    func getNewsXMLRequest()-> Observable<XMLNewsEntity>
+    func getXMLVarzesh3Request()-> Observable<XMLVerzesh3Entity>
+    func getXMLFFIRequest()-> Observable<XMLFFIREntity>
 }

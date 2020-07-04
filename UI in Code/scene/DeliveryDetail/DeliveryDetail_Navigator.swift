@@ -9,23 +9,22 @@
 import UIKit
 import Domain
 
-
 protocol DeliveryDetailNavigation {
-    func deliveryDetail(_ delivery: DeliveryEntity,_ favoriteUsecase:FavoriteUsecase)
+    func deliveryDetail(_ delivery: DeliveryEntity, _ favoriteUsecase: FavoriteUsecase)
 }
 
 class DefaultDeliveryDetailNavigation: DeliveryDetailNavigation {
     
-    let navigation : UINavigationController!
+    let navigation: UINavigationController!
     
-    init(navigation:UINavigationController) {
+    init(navigation: UINavigationController) {
         self.navigation = navigation
     }
     
-    func deliveryDetail(_ delivery: DeliveryEntity,_ favoriteUsecase:FavoriteUsecase) {
+    func deliveryDetail(_ delivery: DeliveryEntity, _ favoriteUsecase: FavoriteUsecase) {
         let viewModel = DeliveryDetailViewModel(navigation: self, favoriteServices: favoriteUsecase, deliveryItem: delivery)
         let detail = DeliveryDetailViewController(viewModel: viewModel)
-    self.navigation.pushViewController(detail, animated: true)
+        self.navigation.pushViewController(detail, animated: true)
        }
        
 }

@@ -9,20 +9,18 @@
 import Foundation
 import Swinject
 
-public class BaseNetworkMock : BaseNetwork {
-    
-  
+public class BaseNetworkMock: BaseNetwork {
     
     public init() {}
     
-    func setResult(result:BaseNetworkCallBack){
+    func setResult(result: BaseNetworkCallBack) {
        
     }
     public func isConnectedToIntenet() -> Bool {
           return true
       }
       
-      var _cancel = false
+      var cancelRequest = false
 
     public func load(url: String, method: BaseNetworkMethod, payload: Any?, decoder: BaseNetworkDecoder, complete: @escaping (BaseNetworkCallBack) -> Void) {
         guard !url.isEmpty else {
@@ -30,29 +28,27 @@ public class BaseNetworkMock : BaseNetwork {
             fatalError("SET RESULT Before Call load function")
         }
         
-        var result : BaseNetworkCallBack? = nil
-        if let url = Bundle.main.url(forResource: url  , withExtension: "json"), let data = try? Data(contentsOf: url)
-        {
+        var result: BaseNetworkCallBack?
+        if let url = Bundle.main.url(forResource: url, withExtension: "json"), let data = try? Data(contentsOf: url) {
             result = BaseNetworkCallBack.success(BaseNetworkResult(status: 200, error: nil, data: data))
-        }else{
+        } else {
             result = BaseNetworkCallBack.failure(BaseNetworkResult(status: 404, error: NetworkError.notFound(nil), data: nil))
-            
         }
         complete(result!)
         
     }
     
     public func cancel() {
-        self._cancel = true
+        self.cancelRequest = true
     }
 }
-extension BaseNetworkMock : Assembly {
+
+extension BaseNetworkMock: Assembly {
     public func assemble(container: Container) {
-        container.register(BaseNetwork.self) { r in
+        container.register(BaseNetwork.self) { _ in
             let baseNetwork = BaseNetworkMock()
             return baseNetwork
         }.inObjectScope(.weak)
     }
-    
-    
+
 }

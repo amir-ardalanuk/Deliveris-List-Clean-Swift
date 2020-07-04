@@ -12,14 +12,14 @@ import RxSwift
 import UIKit
 import Kingfisher
 
-extension Reactive where Base:UIRefreshControl {
+extension Reactive where Base: UIRefreshControl {
     
     public var refreshing: Binder<Bool?> {
         return Binder(self.base, binding: { (view, data) in
             let refreshing = data ?? false
-            if(refreshing){
+            if refreshing {
                 view.beginRefreshing()
-            }else{
+            } else {
                 view.endRefreshing()
             }
         })
@@ -27,7 +27,7 @@ extension Reactive where Base:UIRefreshControl {
     }
 }
 
-extension Reactive where Base:UIImageView {
+extension Reactive where Base: UIImageView {
     
     public var imageURL: Binder<URL?> {
         return Binder(self.base, binding: { (view, data) in
@@ -40,7 +40,7 @@ extension Reactive where Base:UIImageView {
     }
 }
 
-extension Reactive where Base:UIButton {
+extension Reactive where Base: UIButton {
     
     public var tintColor: Binder<UIColor?> {
         return Binder(self.base, binding: { (view, data) in

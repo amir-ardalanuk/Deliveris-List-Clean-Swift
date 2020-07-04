@@ -12,9 +12,10 @@ import LocalPlatform
 import Swinject
 
 public class RepositoryFactory {
-    
-    func DeliveryRepository(remote : RemotePlatform.DeliveryUsecaseImpl, local:LocalDeliveryUsecaseImpl ) -> DeliveryUsecaseImpl {
+    func deliveryRepository(remote: RemotePlatform.DeliveryUsecaseImpl, local: LocalDeliveryUsecaseImpl) -> DeliveryUsecaseImpl {
         return DeliveryUsecaseImpl(remote: remote, local: local)
     }
+    func newsRepository(remote: RemotePlatform.NewsXMLUsecaseImpl) -> NewsXMLUsecaseImpl {
+           return NewsXMLUsecaseImpl(remote: remote)
+       }
 }
-

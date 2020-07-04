@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
 public class ActivityIndicator: SharedSequenceConvertibleType {
    
   public typealias Element = Bool
