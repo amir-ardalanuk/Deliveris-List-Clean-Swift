@@ -13,19 +13,37 @@ import StoragePlatform
 import Swinject
 
 public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
+    public func addToFavorite(news: NewsModel) {
+        var items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
+        items.append(news)
+        storage.save(key: favKey, value: items)
+        storage.updatedStatus(key: favKey)
+    }
+    
+    public func removeFromFavorite(news: NewsModel) {
+        var items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
+        let idx = items.firstIndex { $0.link == news.link}
+        guard let index = idx else {return}
+        items.remove(at: index)
+        storage.save(key: favKey, value: items)
+        storage.updatedStatus(key: favKey)
+    }
+    
+    public func retriveFavoritesIds() -> Observable<[NewsModel]> {
+        let items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
+        return Observable.from(optional: items )
+    }
+    
+    public func changeStorageState() -> Observable<NewsModel> {
+        <#code#>
+    }
+    
     
     let favKey = "FAV_ID"
     let storage: StorageUsecase
     
-    init(storage: StorageUsecase) {
+    init(storage:StorageUsecase) {
         self.storage = storage
-    }
-    
-    public func addToFavorite(id key: String) {
-        var items = storage.retrive(key: favKey, type: [String].self) ?? []
-        items.append(key)
-        storage.save(key: favKey, value: items)
-        storage.updatedStatus(key: favKey)
     }
     
     public func isFavorite(_ key: String) -> Observable<Bool> {
@@ -34,17 +52,11 @@ public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
     }
     
     public func retriveFavoritesIds() -> Observable<[String]> {
-        let items = storage.retrive(key: favKey, type: [String].self) ?? []
-        return Observable.from(optional: items )
+        
     }
     
     public func removeFromFavorite(id key: String) {
-        var items = storage.retrive(key: favKey, type: [String].self) ?? []
-        let idx = items.firstIndex { $0 == key}
-        guard let index = idx else {return}
-        items.remove(at: index)
-        storage.save(key: favKey, value: items)
-        storage.updatedStatus(key: favKey)
+        
     }
     
     public func changeStorageState() -> Observable<String> {

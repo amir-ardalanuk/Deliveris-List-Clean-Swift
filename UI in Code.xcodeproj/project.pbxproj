@@ -107,7 +107,6 @@
 		F49B248524AB36EF00CF2F90 /* NewsFeed_DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248424AB36EF00CF2F90 /* NewsFeed_DataSource.swift */; };
 		F49B248724AB388800CF2F90 /* NewsFeed_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248624AB388800CF2F90 /* NewsFeed_VM.swift */; };
 		F49B248A24AB394100CF2F90 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248924AB394100CF2F90 /* NewsCell.swift */; };
-		F49B248D24AB3FC700CF2F90 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248C24AB3FC700CF2F90 /* NewsModel.swift */; };
 		F49B248F24AB469000CF2F90 /* News_Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248E24AB469000CF2F90 /* News_Navigation.swift */; };
 		F49B249124AB4B2500CF2F90 /* NewsXMLUsecaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B249024AB4B2500CF2F90 /* NewsXMLUsecaseImpl.swift */; };
 		F49B249424AC712400CF2F90 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B249324AC712400CF2F90 /* Application.swift */; };
@@ -117,6 +116,7 @@
 		F49B24A024B0535300CF2F90 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F49B249F24B0535300CF2F90 /* .swiftlint.yml */; };
 		F49B24A324B08F0C00CF2F90 /* XMLFFIREntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B24A224B08F0C00CF2F90 /* XMLFFIREntity.swift */; };
 		F49B24A524B08F3B00CF2F90 /* XMLNewsChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B24A424B08F3B00CF2F90 /* XMLNewsChannelEntity.swift */; };
+		F49B24A924B0B44100CF2F90 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B248C24AB3FC700CF2F90 /* NewsModel.swift */; };
 		F4BAB4B061055C8E7C86C1A3 /* Pods_LocalPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B732A7F927A26DEADFFCBA2C /* Pods_LocalPlatform.framework */; };
 /* End PBXBuildFile section */
 
@@ -589,7 +589,6 @@
 			isa = PBXGroup;
 			children = (
 				F49B249224AC711100CF2F90 /* application */,
-				F49B248B24AB3FBC00CF2F90 /* entity */,
 				F48E134824A1DC96008EE7C3 /* utility */,
 				F48E134124A1D164008EE7C3 /* scene */,
 				F48E132D24A1CDA3008EE7C3 /* AppDelegate.swift */,
@@ -780,6 +779,7 @@
 				F48E13C224A7225F008EE7C3 /* EntityRequest.swift */,
 				F48E13C424A7225F008EE7C3 /* BaseResponse.swift */,
 				F48E13D124A72B50008EE7C3 /* DeliveryEntity.swift */,
+				F49B248C24AB3FC700CF2F90 /* NewsModel.swift */,
 				F49B247824AB117100CF2F90 /* XMLVerzesh3Entity.swift */,
 				F49B24A224B08F0C00CF2F90 /* XMLFFIREntity.swift */,
 				F49B24A424B08F3B00CF2F90 /* XMLNewsChannelEntity.swift */,
@@ -874,14 +874,6 @@
 				F49B248924AB394100CF2F90 /* NewsCell.swift */,
 			);
 			path = cell;
-			sourceTree = "<group>";
-		};
-		F49B248B24AB3FBC00CF2F90 /* entity */ = {
-			isa = PBXGroup;
-			children = (
-				F49B248C24AB3FC700CF2F90 /* NewsModel.swift */,
-			);
-			path = entity;
 			sourceTree = "<group>";
 		};
 		F49B249224AC711100CF2F90 /* application */ = {
@@ -1446,7 +1438,6 @@
 				F43BD88224A75876002B1E41 /* Home_ViewModel.swift in Sources */,
 				F43BD87124A74B7C002B1E41 /* NibLoadable.swift in Sources */,
 				F48E135724A21A18008EE7C3 /* Home_Navigation.swift in Sources */,
-				F49B248D24AB3FC700CF2F90 /* NewsModel.swift in Sources */,
 				F49B248A24AB394100CF2F90 /* NewsCell.swift in Sources */,
 				F43BD88424A758AC002B1E41 /* ViewModel.swift in Sources */,
 				F48E133224A1CDA3008EE7C3 /* ViewController.swift in Sources */,
@@ -1527,6 +1518,7 @@
 				F48E13CB24A7225F008EE7C3 /* BaseResponse.swift in Sources */,
 				F48E13CA24A7225F008EE7C3 /* EntityRequest.swift in Sources */,
 				F49B24A524B08F3B00CF2F90 /* XMLNewsChannelEntity.swift in Sources */,
+				F49B24A924B0B44100CF2F90 /* NewsModel.swift in Sources */,
 				F49B24A324B08F0C00CF2F90 /* XMLFFIREntity.swift in Sources */,
 				F48E13C924A7225F008EE7C3 /* DeliveryUsecases.swift in Sources */,
 				F44EC60024A8A474000419C3 /* FavoriteUseCase.swift in Sources */,

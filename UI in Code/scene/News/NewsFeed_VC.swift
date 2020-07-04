@@ -21,9 +21,11 @@ class NewsFeedVC: UIViewController {
         let sg = UISegmentedControl()
         sg.backgroundColor = .white
         sg.tintColor = .darkGray
+        
         sg.translatesAutoresizingMaskIntoConstraints = false
         sg.insertSegment(withTitle: "Varzesh3", at: 0, animated: true)
         sg.insertSegment(withTitle: "Footbali", at: 1, animated: true)
+        sg.selectedSegmentIndex = 0
         return sg
     }()
     
@@ -62,7 +64,7 @@ extension NewsFeedVC {
         self.loadingBar.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         self.dataBinding()
         self.getDerliveryList.onNext(())
-        self.title = "Delivery"
+//        self.title = "News"
         self.view.backgroundColor = .white
     }
     
@@ -87,7 +89,8 @@ extension NewsFeedVC {
     func dataBinding() {
         let input = NewsFeedVM.Input(
             getList: getDerliveryList.asDriverOnErrorJustComplete(),
-            selectedItem: tableView.rx.itemSelected.asDriver())
+            selectedItem: tableView.rx.itemSelected.asDriver(),
+            selectedSection: section.rx.selectedSegmentIndex.asDriver())
         
         let output = self.viewModel.transform(input: input)
         output.list.drive(tableView.rx.newsDataSourceList).disposed(by: bag)

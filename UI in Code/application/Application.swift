@@ -21,15 +21,17 @@ class Application {
     func setupInitailController() {
         let tabbar = UITabBarController()
         tabbar.viewControllers = [newsNavigation()]
+        
         self.setupWindow(initailController: tabbar)
         
     }
     
     private func newsNavigation() -> UINavigationController {
         let navigationController = MainNavigationController()
-        print(mainAssembler.resolver.self)
+        
         let newsXMLServices = mainAssembler.resolver.resolve(NewsXMLUsecaseImpl.self)!
         let favServices = mainAssembler.resolver.resolve(FavoriteUsecaseImpl.self)!
+        
         let news = DefaultNewsFeedNavigation(services: newsXMLServices,
                                              favoriteUsecase: favServices,
                                              navigation: navigationController)
@@ -39,9 +41,6 @@ class Application {
     
     private func setupWindow(initailController initVC: UIViewController) {
            let window  = UIWindow(frame: UIScreen.main.bounds)
-           
-           //let homeRouter = mainAssembler.resolver.resolve(HomeNavigationDefault.self)
-           //homeRouter?.deliveryList()
            
            window.backgroundColor = .black
            window.rootViewController = initVC

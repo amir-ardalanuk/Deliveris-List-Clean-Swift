@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 public protocol FavoriteUsecase {
-    func addToFavorite(id: String)
-    func removeFromFavorite(id: String)
+    func addToFavorite(news: NewsModel)
+    func removeFromFavorite(news: NewsModel)
     func isFavorite(_ id: String)-> Observable<Bool>
-    func retriveFavoritesIds()->Observable<[String]>
-    func changeStorageState() -> Observable<String>
+    func retriveFavoritesIds()->Observable<[NewsModel]>
+    func changeStorageState() -> Observable<NewsModel>
 }

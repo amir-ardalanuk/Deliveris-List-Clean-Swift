@@ -38,8 +38,8 @@ class DefaultNewsFeedNavigation: NewsFeedNavigation {
     func list() {
         let viewModel = NewsFeedVM(newsXMLUsecase: services, favoriteUsecases: favoriteUsecase, navigation: self)
         let home = NewsFeedVC(viewModel: viewModel)
+        navigationController.tabBarItem = UITabBarItem(title: "News", image: #imageLiteral(resourceName: "icons8-rss-22"), tag: 0)
         navigationController.viewControllers = [home]
-       // return navigationController
     }
 }
 
