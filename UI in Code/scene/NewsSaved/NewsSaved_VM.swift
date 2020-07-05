@@ -14,19 +14,12 @@ import RepositroyPlatform
 
 class NewsSavedVM: ViewModel {
     
-    enum NewsSection: Int {
-        case varzesh3 = 0
-        case FFIRAN = 1
-    }
-    
-    let newsServices: NewsXMLUsecase
     let favoriteServices: FavoriteUsecase
     let news = BehaviorSubject<[NewsModel]>(value: [])
-    let navigation: NewsFeedNavigation
+    let navigation: NewsSavedNavigation
     let bag = DisposeBag()
     
-    init(newsXMLUsecase: NewsXMLUsecase, favoriteUsecases: FavoriteUsecase, navigation: NewsFeedNavigation) {
-        self.newsServices = newsXMLUsecase
+    init(favoriteUsecases: FavoriteUsecase, navigation: NewsSavedNavigation) {
         self.favoriteServices = favoriteUsecases
         self.navigation = navigation
     }
@@ -37,16 +30,14 @@ class NewsSavedVM: ViewModel {
         
         let trigger = Observable.combineLatest(self.favoriteServices.changeStorageState().startWith(""), input.getList.asObservable().startWith() )
         
+        input.favoriteUpdated.asObservable().withLatestFrom(news) { (itemId, news) -> NewsModel? in
+            news.first { ($0.link ?? "--") == itemId }
+        }.filter { $0 != nil}.subscribe(onNext: { (model) in
+            self.favoriteServices.toggle(model: model!).subscribe().disposed(by: self.bag)
+        }).disposed(by: bag)
+        
         let listOutput = trigger.flatMapLatest { (_) -> Observable<[NewsModel]> in
-            let newsSection = NewsSection(rawValue: index)
-                switch newsSection {
-                case .varzesh3:
-                    return self.getVarzesh3News().trackError(errorTracker).trackActivity(activityTracker)
-                case .FFIRAN:
-                    return self.getFFIRNews().trackError(errorTracker).trackActivity(activityTracker)
-                case .none:
-                     return Observable.from([])
-                }
+            return self.getFavoriteList().trackError(errorTracker).trackActivity(activityTracker)
             }.do(onNext: { (list) in
                 self.news.onNext(list)
             }).asDriverOnErrorJustComplete()
@@ -64,15 +55,7 @@ class NewsSavedVM: ViewModel {
     }
     
     func getFavoriteList() -> Observable<[NewsModel]> {
-        return self.
-    }
-    
-    func getFFIRNews() -> Observable<[NewsModel]> {
-        return Observable.zip(newsServices.getXMLFFIRequest(), self.favoriteServices.retriveFavoritesIds()) { (news, _)  in
-            return news.channel?.items.map {
-                NewsModel(title: $0.title, date: $0.pubDate, link: $0.link, desc: $0.description, imagePath: $0.enclosure?.url
-                ) } ?? []
-        }
+        return self.favoriteServices.retriveFavoritesModels()
     }
     
 }
@@ -81,6 +64,7 @@ extension NewsSavedVM {
     struct Input {
         let getList: Driver<Void>
         let selectedItem: Driver<IndexPath>
+        let favoriteUpdated: Driver<String>
     }
     
     struct Output {

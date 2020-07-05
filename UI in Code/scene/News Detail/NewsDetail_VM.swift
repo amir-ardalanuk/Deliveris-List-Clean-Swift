@@ -14,7 +14,7 @@ import RepositroyPlatform
 
 class NewsDetailVM: ViewModel {
     
-    let newsModel: NewsModel
+    var newsModel: NewsModel
     let favoriteServices: FavoriteUsecase
     
     let navigation: NewsDetailNavigation
@@ -35,9 +35,11 @@ class NewsDetailVM: ViewModel {
         input.favTrigger.flatMapLatest({ _ in
             return self.favoriteServices.isFavorite(id).map { (isFav) -> Bool in
                 if isFav {
+                    self.newsModel.toggleFavoriteState()
                     self.favoriteServices.removeFromFavorite(news: self.newsModel)
                     return false
                 } else {
+                    self.newsModel.toggleFavoriteState()
                     self.favoriteServices.addToFavorite(news: self.newsModel)
                     return true
                 }

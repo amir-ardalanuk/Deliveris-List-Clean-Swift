@@ -13,7 +13,8 @@ import StoragePlatform
 import Swinject
 
 public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
-  
+    
+    
     let favKey = "FAV_ID"
     let storage: StorageUsecase
     
@@ -42,15 +43,25 @@ public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
         storage.updatedStatus(key: favKey)
     }
     
-    public func retriveFavoritesIds() -> Observable<[NewsModel]> {
+    public func retriveFavoritesModels() -> Observable<[NewsModel]> {
         let items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
         return Observable.from(optional: items )
     }
     
     public func changeStorageState() -> Observable<String> {
-         return storage.statusChanged().filter { $0 == self.favKey }
+        return storage.statusChanged().filter { $0 == self.favKey }
     }
     
+    public func toggle(model: NewsModel) -> Observable<Bool> {
+        return isFavorite(model.link ?? "").do(onNext: { (state) in
+            if state {
+                self.removeFromFavorite(news: model)
+            } else {
+                self.addToFavorite(news: model)
+            }
+        })
+        
+    }
 }
 
 public class LocalFavoriteUsecase: Assembly {

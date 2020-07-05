@@ -8,8 +8,14 @@
 
 import UIKit
 import Domain
+import RxCocoa
+import RxSwift
 
 class NewsCell: UITableViewCell {
+    
+    let onFavoriteClicked = PublishSubject<String>()
+    var bag = DisposeBag()
+    
     var lblTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
@@ -41,6 +47,15 @@ class NewsCell: UITableViewCell {
         return label
     }()
     
+    var btnFav: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(#imageLiteral(resourceName: "icons8-love-96"), for: .normal)
+        btn.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        btn.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     var lblDes: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.gray
@@ -65,11 +80,16 @@ class NewsCell: UITableViewCell {
 //Lifecylce
 extension NewsCell {
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.bag = DisposeBag()
+    }
+    
     private func setup() {
         bakeUi()
     }
     
-    func config(model: NewsModel) {
+    func config(model: NewsModel) -> PublishSubject<String> {
         if let image = URL(string: model.imagePath ?? "") {
             imgView.kf.setImage(with: image)
         } else {
@@ -78,6 +98,13 @@ extension NewsCell {
         self.lblTitle.text = model.title
         self.lblDes.text = model.desc
         self.lblDate.text = model.date
+        
+        self.btnFav.setImage(model.isFavorite ? #imageLiteral(resourceName: "icons8-love-96") : #imageLiteral(resourceName: "icons8-love-32"), for: .normal)
+        self.btnFav.rx.tap.map {
+            let new = model.toggleFavoriteState()
+            return new.link ?? "-1"
+        }.bind(to: onFavoriteClicked).disposed(by: bag)
+        return onFavoriteClicked
     }
 }
 //Constraint - View
@@ -95,10 +122,23 @@ extension NewsCell {
     
     func makeLabelesStack() -> UIStackView {
         let verticalSV = ViewMaker.makeStackView( aligment: .trailing, space: 8)
+        
         verticalSV.addArrangedSubview(lblTitle)
         verticalSV.addArrangedSubview(lblDes)
-        verticalSV.addArrangedSubview(lblDate)
+        
+        let dateAndFav = makeDateAndFavStack()
+        verticalSV.addArrangedSubview(dateAndFav)
+        
+        dateAndFav.leadingAnchor.constraint(equalTo: verticalSV.leadingAnchor, constant: 8).isActive = true
         
         return verticalSV
+    }
+    
+    func makeDateAndFavStack() -> UIStackView {
+        let horizontalStack = ViewMaker.makeStackView(axios: .horizontal, distribution: .fill, aligment: .center, space: 8)
+        
+        horizontalStack.addArrangedSubview(btnFav)
+        horizontalStack.addArrangedSubview(lblDate)
+        return horizontalStack
     }
 }

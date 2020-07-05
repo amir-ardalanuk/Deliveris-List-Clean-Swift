@@ -30,7 +30,7 @@ class NewsSavedVC: UIViewController {
         return tView
     }()
     
-    init(viewModel: NewsFeedVM) {
+    init(viewModel: NewsSavedVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,15 +53,14 @@ extension NewsSavedVC {
         super.viewDidLoad()
         self.loadingBar.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         self.dataBinding()
-        self.getDerliveryList.onNext(())
-//        self.title = "News"
+        self.getSavedList.onNext(())
         self.view.backgroundColor = .white
     }
     
     @objc func refresh(_ sender: AnyObject) {
-        self.getDerliveryList.onNext(())
+        self.getSavedList.onNext(())
     }
-     
+    
     func tableViewConfig() {
         tableView.delegate = datasource
         tableView.dataSource = datasource
@@ -77,11 +76,11 @@ extension NewsSavedVC {
 extension NewsSavedVC {
     
     func dataBinding() {
-        let input = NewsFeedVM.Input(
+        let input = NewsSavedVM.Input(
             getList: getSavedList.asDriverOnErrorJustComplete(),
             selectedItem: tableView.rx.itemSelected.asDriver(),
-            )
-        
+            favoriteUpdated: datasource.favoriteSelected.asDriverOnErrorJustComplete())
+       
         let output = self.viewModel.transform(input: input)
         output.list.drive(tableView.rx.newsDataSourceList).disposed(by: bag)
         output.loading.drive(self.loadingBar.rx.isRefreshing).disposed(by: bag)

@@ -20,7 +20,7 @@ class Application {
     
     func setupInitailController() {
         let tabbar = UITabBarController()
-        tabbar.viewControllers = [newsNavigation()]
+        tabbar.viewControllers = [newsNavigation(), newsSavedNavigation()]
         
         self.setupWindow(initailController: tabbar)
         
@@ -38,6 +38,17 @@ class Application {
         news.list()
         return navigationController
     }
+    
+    private func newsSavedNavigation() -> UINavigationController {
+           let navigationController = MainNavigationController()
+           
+           let favServices = mainAssembler.resolver.resolve(FavoriteUsecaseImpl.self)!
+           
+           let news = DefaultNewsSavedNavigation(favoriteUsecase: favServices,
+                                                navigation: navigationController)
+           news.newsSaved()
+           return navigationController
+       }
     
     private func setupWindow(initailController initVC: UIViewController) {
            let window  = UIWindow(frame: UIScreen.main.bounds)

@@ -92,7 +92,8 @@ extension NewsFeedVC {
         let input = NewsFeedVM.Input(
             getList: getDerliveryList.asDriverOnErrorJustComplete(),
             selectedItem: tableView.rx.itemSelected.asDriver(),
-            selectedSection: section.rx.selectedSegmentIndex.asDriver())
+            selectedSection: section.rx.selectedSegmentIndex.asDriver(),
+            favoriteUpdated: datasource.favoriteSelected.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         output.list.drive(tableView.rx.newsDataSourceList).disposed(by: bag)
@@ -119,20 +120,5 @@ extension NewsFeedVC {
             tableView.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 0)
         ]
         NSLayoutConstraint.activate(constaint)
-    }
-}
-
-extension Reactive where Base: UITableView {
-    internal var newsDataSourceList: Binder<[NewsModel]> {
-        return Binder(self.base, binding: { (view, data) in
-            if let datasource = view.dataSource as? NewsDataSource {
-                datasource.update(data)
-                DispatchQueue.main.async {
-                    view.reloadData {
-                        print("reload")
-                    }
-                }
-            }
-        })
     }
 }

@@ -10,24 +10,30 @@ import UIKit
 import Domain
 
 protocol NewsSavedNavigation {
-    func newsSaved( _ favoriteUsecase: FavoriteUsecase)
+    func newsSaved()
+    func detail(_ news: NewsModel)
 }
 
 class DefaultNewsSavedNavigation: NewsSavedNavigation {
    
-
-    let navigation: UINavigationController!
+    let favoriteUsecase: FavoriteUsecase
+    let navigationController: UINavigationController
     
-    init(navigation: UINavigationController) {
-        self.navigation = navigation
+    init( favoriteUsecase: FavoriteUsecase, navigation: UINavigationController ) {
+        self.favoriteUsecase = favoriteUsecase
+        self.navigationController = navigation
     }
     
-    func newsSaved(_ favoriteUsecase: FavoriteUsecase) {
-           let viewModel = NewsDetailVM(newsModel: model, favoriteUsecases: favoriteUsecase, navigation: self)
-                 let detail = NewsDetailVC(viewModel: viewModel)
-                 detail.hidesBottomBarWhenPushed = true
-                 self.navigation.pushViewController(detail, animated: true)
-       }
-       
+    func newsSaved() {
+        let viewModel = NewsSavedVM( favoriteUsecases: favoriteUsecase, navigation: self)
+        let home = NewsSavedVC(viewModel: viewModel)
+        navigationController.tabBarItem = UITabBarItem(title: "News Saved", image: #imageLiteral(resourceName: "icons8-love-96"), tag: 1)
+        navigationController.viewControllers = [home]
+    }
     
+     func detail(_ news: NewsModel) {
+          let detailNavigator = DefaultNewsDetailNavigation(navigation: self.navigationController)
+          detailNavigator.newsDetail(news, self.favoriteUsecase)
+      }
+
 }
