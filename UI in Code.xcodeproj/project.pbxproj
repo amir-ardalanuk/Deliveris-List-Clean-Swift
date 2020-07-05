@@ -13,8 +13,6 @@
 		DAF55A97694B8A1D66999594 /* Pods_RepositroyPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6340723E39F4D1B303B447 /* Pods_RepositroyPlatform.framework */; };
 		DE5922B317308595A83F79CF /* Pods_UI_in_Code.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA8AE7BD52EF65D11E27C44 /* Pods_UI_in_Code.framework */; };
 		E8B64032B1E48344331228F9 /* Pods_Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5503813ED0497A01D280533 /* Pods_Domain.framework */; };
-		F417850B24A863FB00369AAE /* DeliveryDetail_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417850A24A863FB00369AAE /* DeliveryDetail_ViewModel.swift */; };
-		F417850D24A8641F00369AAE /* DeliveryDetail_Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417850C24A8641F00369AAE /* DeliveryDetail_Navigator.swift */; };
 		F43BD86224A740B1002B1E41 /* RemoteFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD86124A740B1002B1E41 /* RemoteFactory.swift */; };
 		F43BD86424A7428C002B1E41 /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD86324A7428C002B1E41 /* RepositoryFactory.swift */; };
 		F43BD86D24A74B7C002B1E41 /* Shadowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD86624A74B7C002B1E41 /* Shadowable.swift */; };
@@ -29,7 +27,6 @@
 		F43BD87D24A74B8B002B1E41 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD87924A74B8A002B1E41 /* ActivityIndicator.swift */; };
 		F43BD87E24A74B8B002B1E41 /* Observable+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD87A24A74B8A002B1E41 /* Observable+ext.swift */; };
 		F43BD87F24A74B8B002B1E41 /* RxCoco+ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD87B24A74B8A002B1E41 /* RxCoco+ex.swift */; };
-		F43BD88224A75876002B1E41 /* Home_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD88124A75876002B1E41 /* Home_ViewModel.swift */; };
 		F43BD88424A758AC002B1E41 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD88324A758AC002B1E41 /* ViewModel.swift */; };
 		F43BD88624A759A7002B1E41 /* DeliveryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BD88524A759A7002B1E41 /* DeliveryModel.swift */; };
 		F44EC60024A8A474000419C3 /* FavoriteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44EC5FF24A8A474000419C3 /* FavoriteUseCase.swift */; };
@@ -39,14 +36,11 @@
 		F48E133224A1CDA3008EE7C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E133124A1CDA3008EE7C3 /* ViewController.swift */; };
 		F48E133724A1CDA5008EE7C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48E133624A1CDA5008EE7C3 /* Assets.xcassets */; };
 		F48E133A24A1CDA5008EE7C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48E133824A1CDA5008EE7C3 /* LaunchScreen.storyboard */; };
-		F48E134424A1D183008EE7C3 /* Home_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E134324A1D183008EE7C3 /* Home_ViewController.swift */; };
 		F48E134724A1D216008EE7C3 /* DeliveryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E134624A1D216008EE7C3 /* DeliveryDataSource.swift */; };
 		F48E134E24A1E079008EE7C3 /* UsesAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E134D24A1E079008EE7C3 /* UsesAutoLayout.swift */; };
 		F48E135124A1E6F6008EE7C3 /* DeliverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E135024A1E6F6008EE7C3 /* DeliverCell.swift */; };
 		F48E135324A1FCB8008EE7C3 /* ExView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E135224A1FCB8008EE7C3 /* ExView.swift */; };
-		F48E135724A21A18008EE7C3 /* Home_Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E135624A21A18008EE7C3 /* Home_Navigation.swift */; };
 		F48E135924A2236B008EE7C3 /* HomeNavigationbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E135824A2236B008EE7C3 /* HomeNavigationbar.swift */; };
-		F48E135C24A22D07008EE7C3 /* DeliveryDetail_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E135B24A22D07008EE7C3 /* DeliveryDetail_ViewController.swift */; };
 		F48E136324A24A13008EE7C3 /* ViewMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E136224A24A13008EE7C3 /* ViewMaker.swift */; };
 		F48E136D24A71A27008EE7C3 /* NetworkPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = F48E136B24A71A27008EE7C3 /* NetworkPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F48E137024A71A27008EE7C3 /* NetworkPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48E136924A71A27008EE7C3 /* NetworkPlatform.framework */; };
@@ -1435,9 +1429,7 @@
 				F43BD87224A74B7C002B1E41 /* ExTableView.swift in Sources */,
 				F48E136324A24A13008EE7C3 /* ViewMaker.swift in Sources */,
 				F43BD87324A74B7C002B1E41 /* ExCollectionView.swift in Sources */,
-				F43BD88224A75876002B1E41 /* Home_ViewModel.swift in Sources */,
 				F43BD87124A74B7C002B1E41 /* NibLoadable.swift in Sources */,
-				F48E135724A21A18008EE7C3 /* Home_Navigation.swift in Sources */,
 				F49B248A24AB394100CF2F90 /* NewsCell.swift in Sources */,
 				F43BD88424A758AC002B1E41 /* ViewModel.swift in Sources */,
 				F48E133224A1CDA3008EE7C3 /* ViewController.swift in Sources */,
@@ -1451,16 +1443,12 @@
 				F49B248524AB36EF00CF2F90 /* NewsFeed_DataSource.swift in Sources */,
 				F48E134724A1D216008EE7C3 /* DeliveryDataSource.swift in Sources */,
 				F43BD86E24A74B7C002B1E41 /* Dashable.swift in Sources */,
-				F417850B24A863FB00369AAE /* DeliveryDetail_ViewModel.swift in Sources */,
 				F48E135324A1FCB8008EE7C3 /* ExView.swift in Sources */,
 				F48E134E24A1E079008EE7C3 /* UsesAutoLayout.swift in Sources */,
 				F43BD87624A74B83002B1E41 /* MainAssembler.swift in Sources */,
-				F48E135C24A22D07008EE7C3 /* DeliveryDetail_ViewController.swift in Sources */,
 				F49B249924AC955100CF2F90 /* NewsDetail_VC.swift in Sources */,
 				F43BD87D24A74B8B002B1E41 /* ActivityIndicator.swift in Sources */,
 				F43BD87024A74B7C002B1E41 /* ReusableView.swift in Sources */,
-				F48E134424A1D183008EE7C3 /* Home_ViewController.swift in Sources */,
-				F417850D24A8641F00369AAE /* DeliveryDetail_Navigator.swift in Sources */,
 				F48E135124A1E6F6008EE7C3 /* DeliverCell.swift in Sources */,
 				F43BD86F24A74B7C002B1E41 /* Connectable.swift in Sources */,
 				F49B248324AB353300CF2F90 /* NewsFeed_VC.swift in Sources */,

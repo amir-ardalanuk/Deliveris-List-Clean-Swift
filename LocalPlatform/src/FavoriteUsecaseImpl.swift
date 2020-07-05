@@ -13,6 +13,20 @@ import StoragePlatform
 import Swinject
 
 public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
+  
+         
+    let favKey = "FAV_ID"
+    let storage: StorageUsecase
+    
+    init(storage: StorageUsecase) {
+        self.storage = storage
+    }
+    
+    public func isFavorite(_ key: String) -> Observable<Bool> {
+        let items = storage.retrive(key: favKey, type: [String].self) ?? []
+        return Observable.from(optional: items.filter { $0 == key}.first != nil)
+    }
+    
     public func addToFavorite(news: NewsModel) {
         var items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
         items.append(news)
@@ -34,34 +48,10 @@ public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
         return Observable.from(optional: items )
     }
     
-    public func changeStorageState() -> Observable<NewsModel> {
-        <#code#>
-    }
-    
-    
-    let favKey = "FAV_ID"
-    let storage: StorageUsecase
-    
-    init(storage:StorageUsecase) {
-        self.storage = storage
-    }
-    
-    public func isFavorite(_ key: String) -> Observable<Bool> {
-        let items = storage.retrive(key: favKey, type: [String].self) ?? []
-        return Observable.from(optional: items.filter { $0 == key}.first != nil)
-    }
-    
-    public func retriveFavoritesIds() -> Observable<[String]> {
-        
-    }
-    
-    public func removeFromFavorite(id key: String) {
-        
-    }
-    
     public func changeStorageState() -> Observable<String> {
-        return storage.statusChanged().filter { $0 == self.favKey }
+         return storage.statusChanged().filter { $0 == self.favKey }
     }
+    
 }
 
 public class LocalFavoriteUsecase: Assembly {

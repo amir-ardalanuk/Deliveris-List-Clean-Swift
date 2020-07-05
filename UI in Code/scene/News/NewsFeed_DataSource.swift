@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Domain
 
 class NewsDataSource: NSObject, UITableViewDelegate, UITableViewDataSource {
     

@@ -42,7 +42,7 @@ class MainAssembler {
         assembler.apply(assembly: RepositoryNewsXMLUsecase())
         
         //UI
-        assembler.apply(assembly: HomeRouterAssembly())
+        //assembler.apply(assembly: HomeRouterAssembly())
         assembler.apply(assembly: MainNavigationAssembly())
     }
 }

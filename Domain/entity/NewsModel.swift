@@ -8,9 +8,17 @@
 
 import Foundation
 public struct NewsModel: Codable {
-   public var title: String?
-   public var date: String?
-   public var link: String?
-   public var desc: String?
-   public var imagePath: String?
+    
+    public init(title: String?, date: String?, link: String?, desc: String?, imagePath: String?) {
+        self.title = title
+        self.date = date
+        self.link = link
+        self.desc = desc
+        self.imagePath = imagePath
+    }
+    public var title: String?
+    public var date: String?
+    public var link: String?
+    public var desc: String?
+    public var imagePath: String?
 }

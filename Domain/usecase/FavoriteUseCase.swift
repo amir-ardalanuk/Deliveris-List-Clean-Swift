@@ -14,5 +14,5 @@ public protocol FavoriteUsecase {
     func removeFromFavorite(news: NewsModel)
     func isFavorite(_ id: String)-> Observable<Bool>
     func retriveFavoritesIds()->Observable<[NewsModel]>
-    func changeStorageState() -> Observable<NewsModel>
+    func changeStorageState() -> Observable<String>
 }

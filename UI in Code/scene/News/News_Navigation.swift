@@ -43,14 +43,14 @@ class DefaultNewsFeedNavigation: NewsFeedNavigation {
     }
 }
 
-class NewsFeedNavigationAssembly: Assembly {
-    func assemble(container: Container) {
-        container.register(HomeNavigationDefault.self) { (resolver) in
-            let deliveryUsecaceImpl = resolver.resolve(RepositroyPlatform.DeliveryUsecaseImpl.self)!
-            let favoriteUsecaseImpl = resolver.resolve(FavoriteUsecaseImpl.self)!
-            
-            let navigation = resolver.resolve(MainNavigationController.self)!
-            return HomeNavigationDefault(services: deliveryUsecaceImpl, favoriteUsecase: favoriteUsecaseImpl, navigation: navigation)
-        }.inObjectScope(.weak)
-    }
-}
+//class NewsFeedNavigationAssembly: Assembly {
+//    func assemble(container: Container) {
+//        container.register(DefaultNewsFeedNavigation.self) { (resolver) in
+//            let deliveryUsecaceImpl = resolver.resolve(RepositroyPlatform.DeliveryUsecaseImpl.self)!
+//            let favoriteUsecaseImpl = resolver.resolve(FavoriteUsecaseImpl.self)!
+//
+//            let navigation = resolver.resolve(MainNavigationController.self)!
+//            return DefaultNewsFeedNavigation(services: deliveryUsecaceImpl, favoriteUsecase: favoriteUsecaseImpl, navigation: navigation)
+//        }.inObjectScope(.weak)
+//    }
+//}

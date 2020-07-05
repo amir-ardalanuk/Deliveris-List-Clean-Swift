@@ -32,10 +32,10 @@ class NewsDetailVM: ViewModel {
             let id = self.newsModel.link ?? ""
             return self.favoriteServices.isFavorite(id).map { (isFav) -> Bool in
                 if isFav {
-                    self.favoriteServices.removeFromFavorite(id: id)
+                    self.favoriteServices.removeFromFavorite(news: self.newsModel)
                     return false
                 } else {
-                    self.favoriteServices.addToFavorite(id: id)
+                    self.favoriteServices.addToFavorite(news: self.newsModel)
                     return true
                 }
             }.asDriverOnErrorJustComplete()

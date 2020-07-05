@@ -31,10 +31,10 @@ class DeliveryDetailViewModel: ViewModel {
            let id = self.deliveryItem.id ?? ""
             return self.favoriteServices.isFavorite(id).map { (isFav) -> Bool in
                 if isFav {
-                    self.favoriteServices.removeFromFavorite(id: id)
+                    self.favoriteServices.removeFromFavorite(news: id)
                     return false
                 } else {
-                    self.favoriteServices.addToFavorite(id: id)
+                    self.favoriteServices.addToFavorite(news: id)
                     return true
                 }
             }.asDriverOnErrorJustComplete()
