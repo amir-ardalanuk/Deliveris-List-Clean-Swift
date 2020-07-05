@@ -14,7 +14,6 @@ import Swinject
 
 public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
   
-         
     let favKey = "FAV_ID"
     let storage: StorageUsecase
     
@@ -23,8 +22,8 @@ public class FavoriteUsecaseImpl: Domain.FavoriteUsecase {
     }
     
     public func isFavorite(_ key: String) -> Observable<Bool> {
-        let items = storage.retrive(key: favKey, type: [String].self) ?? []
-        return Observable.from(optional: items.filter { $0 == key}.first != nil)
+        let items = storage.retrive(key: favKey, type: [NewsModel].self) ?? []
+        return Observable.from(optional: items.filter { ($0.link ?? "") == key}.first != nil)
     }
     
     public func addToFavorite(news: NewsModel) {

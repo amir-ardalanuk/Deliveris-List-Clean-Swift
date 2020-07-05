@@ -16,7 +16,7 @@ public struct FFIRItemEntity: Codable {
     public var description: String?
     public var link: String?
     public var pubDate: String?
-    public var enclosure:EnclosureEntity?
+    public var enclosure: EnclosureEntity?
     
     enum CodingKeys: String, CodingKey {
         case title

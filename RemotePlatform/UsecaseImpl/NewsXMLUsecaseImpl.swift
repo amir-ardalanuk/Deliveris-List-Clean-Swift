@@ -14,7 +14,6 @@ import Swinject
 
 public struct NewsXMLUsecaseImpl: Domain.NewsXMLUsecase {
  
-    
     let requester: NetworkRequest
     init(requester: NetworkRequest) {
         self.requester = requester

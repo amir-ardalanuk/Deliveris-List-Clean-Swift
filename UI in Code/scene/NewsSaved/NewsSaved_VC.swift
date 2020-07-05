@@ -1,34 +1,22 @@
 //
-//  NewsTabVC.swift
+//  NewsSaved_VC.swift
 //  UI in Code
 //
-//  Created by Amir Ardalan on 6/30/20.
+//  Created by Amir Ardalan on 7/5/20.
 //  Copyright © 2020 Clean-Coder. All rights reserved.
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import Domain
+import RxCocoa
+import RxSwift
 
-class NewsFeedVC: UIViewController {
+class NewsSavedVC: UIViewController {
     
     let bag = DisposeBag()
-    var viewModel: NewsFeedVM!
+    var viewModel: NewsSavedVM!
     let datasource = NewsDataSource()
-    let getDerliveryList = PublishSubject<Void>()
-    
-    let section: UISegmentedControl = {
-        let sg = UISegmentedControl()
-        sg.backgroundColor = .white
-        sg.tintColor = .darkGray
-        
-        sg.translatesAutoresizingMaskIntoConstraints = false
-        sg.insertSegment(withTitle: "Varzesh3", at: 0, animated: true)
-        sg.insertSegment(withTitle: "Footbali", at: 1, animated: true)
-        sg.selectedSegmentIndex = 0
-        return sg
-    }()
+    let getSavedList = PublishSubject<Void>()
     
     let loadingBar: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -52,7 +40,7 @@ class NewsFeedVC: UIViewController {
     }
 }
 
-extension NewsFeedVC {
+extension NewsSavedVC {
     
     override func loadView() {
         super.loadView()
@@ -86,13 +74,13 @@ extension NewsFeedVC {
     
 }
 //Data Binding
-extension NewsFeedVC {
+extension NewsSavedVC {
     
     func dataBinding() {
         let input = NewsFeedVM.Input(
-            getList: getDerliveryList.asDriverOnErrorJustComplete(),
+            getList: getSavedList.asDriverOnErrorJustComplete(),
             selectedItem: tableView.rx.itemSelected.asDriver(),
-            selectedSection: section.rx.selectedSegmentIndex.asDriver())
+            )
         
         let output = self.viewModel.transform(input: input)
         output.list.drive(tableView.rx.newsDataSourceList).disposed(by: bag)
@@ -102,19 +90,16 @@ extension NewsFeedVC {
 }
 
 //Constraint
-extension NewsFeedVC {
+extension NewsSavedVC {
     
     func makeTableViewConstaint() {
         let mainStack = ViewMaker.makeStackView(axios: .vertical, distribution: .fill, aligment: .center, space: 8)
         self.view.addSubview(mainStack)
         
-        mainStack.addArrangedSubview(section)
         mainStack.addArrangedSubview(tableView)
         
         mainStack.activateFillSafeAreaConstraint(with: self.view, margin: 4)
         let constaint = [
-            section.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: -8),
-            section.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 0)
         ]
@@ -122,17 +107,3 @@ extension NewsFeedVC {
     }
 }
 
-extension Reactive where Base: UITableView {
-    internal var newsDataSourceList: Binder<[NewsModel]> {
-        return Binder(self.base, binding: { (view, data) in
-            if let datasource = view.dataSource as? NewsDataSource {
-                datasource.update(data)
-                DispatchQueue.main.async {
-                    view.reloadData {
-                        print("reload")
-                    }
-                }
-            }
-        })
-    }
-}

@@ -25,6 +25,7 @@ class DefaultNewsDetailNavigation: NewsDetailNavigation {
     func newsDetail(_ model: NewsModel, _ favoriteUsecase: FavoriteUsecase) {
         let viewModel = NewsDetailVM(newsModel: model, favoriteUsecases: favoriteUsecase, navigation: self)
         let detail = NewsDetailVC(viewModel: viewModel)
+        detail.hidesBottomBarWhenPushed = true
         self.navigation.pushViewController(detail, animated: true)
     }
 }

@@ -16,6 +16,7 @@ class NewsDetailVC: UIViewController {
     var webView: WKWebView!
     var viewModel: NewsDetailVM!
     let bag = DisposeBag()
+    let favTrigger = PublishSubject<Void>()
     
     init(viewModel: NewsDetailVM) {
         self.viewModel = viewModel
@@ -26,16 +27,13 @@ class NewsDetailVC: UIViewController {
         super.init(coder: coder)
     }
     
-    var favbutton: UIButton {
-        let btn = UIButton(type: UIButton.ButtonType.system)
+    lazy var favbutton: UIButton = {
+        let btn = UIButton(type: .system)
         btn.setTitle("", for: UIControl.State.normal)
-        btn.setImage(#imageLiteral(resourceName: "icons8-love-96"), for: UIControl.State.normal)
-        btn.backgroundColor = .white
-        btn.tintColor = .gray
-        //btn.radius(8)
-        //btn.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        btn.addTarget(self, action: #selector(NewsDetailVC.onFavClick), for: .touchUpInside)
+        
         return btn
-    }
+    }()
 }
 
 //Lifecycle
@@ -44,8 +42,14 @@ extension NewsDetailVC {
         webView = WKWebView()
         webView.navigationDelegate = self
         view = webView
+        self.title = "News Detail"
+        
         addFavButtonToNavigation()
         databinding()
+    }
+  
+    @objc func onFavClick() {
+        favTrigger.onNext(())
     }
 }
 
@@ -53,6 +57,7 @@ extension NewsDetailVC {
 extension NewsDetailVC {
     func addFavButtonToNavigation() {
         let tabBarItem = UIBarButtonItem(customView: self.favbutton)
+        tabBarItem.tintColor = .red
         self.navigationItem.rightBarButtonItem = tabBarItem
     }
 }
@@ -60,13 +65,15 @@ extension NewsDetailVC {
 //DataBinding
 extension NewsDetailVC {
     func databinding() {
-        let outPut = self.viewModel.transform(input: NewsDetailVM.Input(favTrigger: self.favbutton.rx.controlEvent(.touchUpInside).asDriver()))
-
-        outPut.favColor.drive(favbutton.rx.tintColor).disposed(by: bag)
+       
+        let outPut = self.viewModel.transform(input: NewsDetailVM.Input(favTrigger: self.favTrigger.asDriverOnErrorJustComplete()))
         outPut.link.drive(self.webView.rx.link).disposed(by: bag)
-        
+        outPut.favImage.observeOn(MainScheduler.instance).subscribe(onNext: { (image) in
+            self.favbutton.setImage(image, for: .normal)
+        }).disposed(by: bag)
     }
 }
+
 extension NewsDetailVC: WKNavigationDelegate {
     
 }

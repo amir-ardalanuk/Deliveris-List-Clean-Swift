@@ -38,3 +38,18 @@ extension Reactive where Base: NewsDataSource {
         })
     }
 }
+
+extension Reactive where Base: UITableView {
+    internal var newsDataSourceList: Binder<[NewsModel]> {
+        return Binder(self.base, binding: { (view, data) in
+            if let datasource = view.dataSource as? NewsDataSource {
+                datasource.update(data)
+                DispatchQueue.main.async {
+                    view.reloadData {
+                        print("reload")
+                    }
+                }
+            }
+        })
+    }
+}

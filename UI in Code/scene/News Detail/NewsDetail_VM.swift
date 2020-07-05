@@ -27,9 +27,12 @@ class NewsDetailVM: ViewModel {
     }
     
     func transform(input: NewsDetailVM.Input) -> NewsDetailVM.Output {
-        let favStatus = PublishSubject<Bool>()
+        let id = self.newsModel.link ?? ""
+        let favStatus =  BehaviorSubject<Bool>(value: false)
+        var favImage: Observable<UIImage> {
+            return favStatus.asObservable().map { $0 ? #imageLiteral(resourceName: "icons8-love-96") : #imageLiteral(resourceName: "icons8-love-32") }
+        }
         input.favTrigger.flatMapLatest({ _ in
-            let id = self.newsModel.link ?? ""
             return self.favoriteServices.isFavorite(id).map { (isFav) -> Bool in
                 if isFav {
                     self.favoriteServices.removeFromFavorite(news: self.newsModel)
@@ -43,10 +46,12 @@ class NewsDetailVM: ViewModel {
             favStatus.onNext(state)
         }).disposed(by: bag)
         
-        let favTint = favStatus.asDriverOnErrorJustComplete().map {
-            $0 ? UIColor.lightGray : UIColor.red }
+        self.favoriteServices.isFavorite(id).subscribe(onNext: { (addedBefore) in
+            favStatus.onNext(addedBefore)
+        }).disposed(by: bag)
+        
         let url = Driver.from(optional: URL(string: self.newsModel.link?.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""))
-        return Output(link: url, favColor: favTint)
+        return Output(link: url, favImage: favImage)
     }
     
 }
@@ -58,7 +63,7 @@ extension NewsDetailVM {
     
     struct Output {
         var link: Driver<URL>
-        var favColor: Driver<UIColor>
+        var favImage: Observable<UIImage>
     }
     
 }

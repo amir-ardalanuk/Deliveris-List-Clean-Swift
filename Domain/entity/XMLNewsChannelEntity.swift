@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct XMLNewsChannelEntity<T:Codable>: Codable {
+public struct XMLNewsChannelEntity<T: Codable>: Codable {
    public var title: String?
    public var link: String?
    public var description: String?

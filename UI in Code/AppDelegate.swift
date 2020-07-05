@@ -11,8 +11,7 @@ import Swinject
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
-    let mainAssembler = MainAssembler()
-    var window: UIWindow?
+    
     var app: Application!
     
     override init() {
@@ -23,17 +22,18 @@ class AppDelegate: UIResponder {
 
 extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        //setupWindow()
+
         app.setupInitailController()
-        let statusBar =  UIView()
+        setupStatusBar()
         
-        statusBar.frame = UIApplication.shared.statusBarFrame
-        
-        statusBar.backgroundColor = .white
-        
-        UIApplication.shared.keyWindow?.addSubview(statusBar)
         return true
+    }
+    
+    func setupStatusBar(){
+        let statusBar =  UIView()
+        statusBar.frame = UIApplication.shared.statusBarFrame
+        statusBar.backgroundColor = .white
+        UIApplication.shared.keyWindow?.addSubview(statusBar)
     }
     
 }
